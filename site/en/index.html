@@ -1,41 +1,41 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MESSE Bandarmologi Copilot — Snowflake CoCo CLI Hackathon 2026</title>
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
 
-<div class="tape-wrap" role="marquee" aria-label="Ringkasan sinyal watchlist">
+<div class="tape-wrap" role="marquee" aria-label="Watchlist signal summary">
   <div class="tape">
     <span class="tape-item"><b>PTBA</b> 82.24 <span class="flat">+0.9%</span></span>
     <span class="tape-item"><b>CMNT</b> 79.81 <span class="up">+2.5%</span></span>
     <span class="tape-item"><b>EXCL</b> 79.22 <span class="flat">+0.4%</span></span>
     <span class="tape-item"><b>CPIN</b> 73.10 <span class="up">+1.6%</span></span>
     <span class="tape-item"><b>UNTR</b> 70.80 <span class="down">−1.8%</span></span>
-    <span class="tape-item"><b>259</b> ticker discanning &middot; <b>0</b> edge terbukti</span>
+    <span class="tape-item"><b>259</b> tickers scanned &middot; <b>0</b> proven edge</span>
     <span class="tape-item"><b>PTBA</b> 82.24 <span class="flat">+0.9%</span></span>
     <span class="tape-item"><b>CMNT</b> 79.81 <span class="up">+2.5%</span></span>
     <span class="tape-item"><b>EXCL</b> 79.22 <span class="flat">+0.4%</span></span>
     <span class="tape-item"><b>CPIN</b> 73.10 <span class="up">+1.6%</span></span>
     <span class="tape-item"><b>UNTR</b> 70.80 <span class="down">−1.8%</span></span>
-    <span class="tape-item"><b>259</b> ticker discanning &middot; <b>0</b> edge terbukti</span>
+    <span class="tape-item"><b>259</b> tickers scanned &middot; <b>0</b> proven edge</span>
   </div>
 </div>
 
-<nav class="topnav" aria-label="Navigasi halaman">
+<nav class="topnav" aria-label="Page navigation">
   <div class="topnav-inner">
     <div class="topnav-links">
       <a href="#watchlist">Watchlist</a>
       <a href="#sizing">Sizing</a>
       <a href="#honesty">Honesty beat</a>
-      <a href="#architecture">Arsitektur</a>
+      <a href="#architecture">Architecture</a>
     </div>
-    <div class="lang-switch" aria-label="Pilih bahasa">
-      <a href="index.html" class="current">ID</a>
-      <a href="en/index.html">EN</a>
+    <div class="lang-switch" aria-label="Choose language">
+      <a href="../index.html">ID</a>
+      <a href="index.html" class="current">EN</a>
     </div>
   </div>
 </nav>
@@ -43,75 +43,75 @@
 <header class="masthead">
   <div class="eyebrow">
     <span>MESSE &times; Snowflake CoCo CLI Hackathon 2026</span>
-    <span>Problem Statement #4 — Pasar Modal, Indonesia</span>
+    <span>Problem Statement #4 — Capital Markets, Indonesia</span>
   </div>
-  <h1 class="title">Copilot bandarmologi yang mengukur edge-nya sendiri sebelum menyarankan ukuran posisi.</h1>
-  <p class="dek">Cortex Analyst di atas skema MART di Snowflake, dijalankan lewat CoCo CLI. Setiap klaim dijawab dengan query langsung ke data — dan menolak memberi ukuran posisi ketika edge-nya tidak terbukti secara statistik.</p>
+  <h1 class="title">A bandarmologi copilot that measures its own edge before it sizes anything.</h1>
+  <p class="dek">Cortex Analyst over a MART schema in Snowflake, driven through CoCo CLI. Every claim is answered by querying the data directly — and it refuses to suggest a position size when the edge isn't statistically proven.</p>
 </header>
 
 <main>
 
   <section id="watchlist" class="reveal">
-    <h2 class="head">Snapshot langsung — 5 Agustus 2026</h2>
-    <h3 class="subhead">Watchlist akumulasi diam-diam</h3>
-    <p class="lede">Sinyal disusun dari skor akumulasi/distribusi MESSE sendiri, di-rank ulang lintas-ticker di Snowflake — dipilih yang persistence-nya penuh dan harga belum bergerak jauh.</p>
+    <h2 class="head">Live snapshot — August 5, 2026</h2>
+    <h3 class="subhead">Quiet accumulation watchlist</h3>
+    <p class="lede">Signals are built from MESSE's own accumulation/distribution factor scores, cross-sectionally re-ranked in Snowflake — filtered to full persistence and price that hasn't moved much yet.</p>
 
     <div class="table-toolbar">
-      <span>Klik header kolom untuk urutkan</span>
-      <span>5 dari 25 ticker berlabel ACCUMULATION</span>
+      <span>Click a column header to sort</span>
+      <span>5 of 25 tickers labeled ACCUMULATION</span>
     </div>
     <div class="table-scroll">
       <table class="watchlist">
-        <caption>Sumber: MART.VW_WATCHLIST, difilter likuiditas &ge; IDR 5 miliar/hari. Diambil dari sesi CoCo CLI langsung.</caption>
+        <caption>Source: MART.VW_WATCHLIST, filtered to liquidity &ge; IDR 5bn/day. Pulled live from a CoCo CLI session.</caption>
         <thead>
           <tr>
             <th data-sort-key="ticker" data-sort-type="text"><button type="button">Ticker <span class="sort-arrow">&#9662;</span></button></th>
-            <th class="num" data-sort-key="score" data-sort-type="number" aria-sort="descending"><button type="button">Skor <span class="sort-arrow">&#9662;</span></button></th>
+            <th class="num" data-sort-key="score" data-sort-type="number" aria-sort="descending"><button type="button">Score <span class="sort-arrow">&#9662;</span></button></th>
             <th class="num" data-sort-key="persist" data-sort-type="number"><button type="button">Persist <span class="sort-arrow">&#9662;</span></button></th>
             <th class="num" data-sort-key="ret" data-sort-type="number"><button type="button">Ret 20D <span class="sort-arrow">&#9662;</span></button></th>
-            <th class="num" data-sort-key="value" data-sort-type="number"><button type="button">Value/hari <span class="sort-arrow">&#9662;</span></button></th>
-            <th>Sinyal</th>
+            <th class="num" data-sort-key="value" data-sort-type="number"><button type="button">Value/day <span class="sort-arrow">&#9662;</span></button></th>
+            <th>Signal</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td class="ticker-cell" data-key="ticker" data-value="PTBA">PTBA<span class="name">Bukit Asam Tbk &middot; Mining</span></td>
             <td class="num" data-key="score" data-value="82.24"><div class="score-bar-wrap">82.2<div class="score-bar"><span style="width:82%"></span></div></div></td>
-            <td class="num" data-key="persist" data-value="20">20/20 hr</td>
+            <td class="num" data-key="persist" data-value="20">20/20 d</td>
             <td class="num pos" data-key="ret" data-value="0.86">+0.86%</td>
-            <td class="num" data-key="value" data-value="13500000000">13.5 M</td>
+            <td class="num" data-key="value" data-value="13500000000">13.5bn</td>
             <td><span class="pill">Accumulation</span></td>
           </tr>
           <tr>
             <td class="ticker-cell" data-key="ticker" data-value="CMNT">CMNT<span class="name">Cemindo Gemilang Tbk &middot; Basic Industry</span></td>
             <td class="num" data-key="score" data-value="79.81"><div class="score-bar-wrap">79.8<div class="score-bar"><span style="width:80%"></span></div></div></td>
-            <td class="num" data-key="persist" data-value="20">20/20 hr</td>
+            <td class="num" data-key="persist" data-value="20">20/20 d</td>
             <td class="num pos" data-key="ret" data-value="2.53">+2.53%</td>
-            <td class="num" data-key="value" data-value="10400000000">10.4 M</td>
+            <td class="num" data-key="value" data-value="10400000000">10.4bn</td>
             <td><span class="pill">Accumulation</span></td>
           </tr>
           <tr>
             <td class="ticker-cell" data-key="ticker" data-value="EXCL">EXCL<span class="name">XL Axiata Tbk &middot; Infrastructure</span></td>
             <td class="num" data-key="score" data-value="79.22"><div class="score-bar-wrap">79.2<div class="score-bar"><span style="width:79%"></span></div></div></td>
-            <td class="num" data-key="persist" data-value="20">20/20 hr</td>
+            <td class="num" data-key="persist" data-value="20">20/20 d</td>
             <td class="num pos" data-key="ret" data-value="0.40">+0.40%</td>
-            <td class="num" data-key="value" data-value="6000000000">6.0 M</td>
+            <td class="num" data-key="value" data-value="6000000000">6.0bn</td>
             <td><span class="pill">Accumulation</span></td>
           </tr>
           <tr>
             <td class="ticker-cell" data-key="ticker" data-value="CPIN">CPIN<span class="name">Charoen Pokphand Tbk &middot; Consumer</span></td>
             <td class="num" data-key="score" data-value="73.10"><div class="score-bar-wrap">73.1<div class="score-bar"><span style="width:73%"></span></div></div></td>
-            <td class="num" data-key="persist" data-value="20">20/20 hr</td>
+            <td class="num" data-key="persist" data-value="20">20/20 d</td>
             <td class="num pos" data-key="ret" data-value="1.60">+1.60%</td>
-            <td class="num" data-key="value" data-value="16600000000">16.6 M</td>
+            <td class="num" data-key="value" data-value="16600000000">16.6bn</td>
             <td><span class="pill">Accumulation</span></td>
           </tr>
           <tr>
             <td class="ticker-cell" data-key="ticker" data-value="UNTR">UNTR<span class="name">United Tractors Tbk &middot; Industrial</span></td>
             <td class="num" data-key="score" data-value="70.80"><div class="score-bar-wrap">70.8<div class="score-bar"><span style="width:71%"></span></div></div></td>
-            <td class="num" data-key="persist" data-value="19">19/20 hr</td>
+            <td class="num" data-key="persist" data-value="19">19/20 d</td>
             <td class="num neg" data-key="ret" data-value="-1.80">−1.80%</td>
-            <td class="num" data-key="value" data-value="52900000000">52.9 M</td>
+            <td class="num" data-key="value" data-value="52900000000">52.9bn</td>
             <td><span class="pill">Accumulation</span></td>
           </tr>
         </tbody>
@@ -119,14 +119,14 @@
     </div>
 
     <div class="disclosure">
-      <b>Bukan broker order flow.</b> MESSE tidak mengumpulkan data transaksi broker IDX — <code>BANDAR_SCORE</code> adalah proxy dari pola harga/volume milik MESSE sendiri, di-rank ulang di Snowflake. Agent selalu menyatakan ini secara eksplisit, tidak dibiarkan tersirat dari nama "bandarmologi".
+      <b>Not broker order flow.</b> MESSE doesn't collect IDX broker transaction data — <code>BANDAR_SCORE</code> is a price/volume factor-score proxy of MESSE's own, cross-sectionally re-ranked in Snowflake. The agent states this explicitly whenever asked, rather than letting the name "bandarmologi" imply more than the data supports.
     </div>
   </section>
 
   <section id="sizing" class="reveal">
-    <h2 class="head">Studi kasus</h2>
-    <h3 class="subhead">Skor tertinggi bukan jaminan ukuran posisi</h3>
-    <p class="lede">PTBA memimpin watchlist dengan skor 82.2 dan persistence penuh. Tapi Fractional Kelly dihitung dari <em>forward return terukur</em>, bukan diasumsikan — dan di sini hasilnya menolak sizing.</p>
+    <h2 class="head">Case study</h2>
+    <h3 class="subhead">The top score doesn't earn a position</h3>
+    <p class="lede">PTBA leads the watchlist with a score of 82.2 and full persistence. But Fractional Kelly is computed from <em>measured</em> forward returns, not assumed ones — and here, the result declines to size.</p>
 
     <div class="case">
       <div class="case-panel">
@@ -142,7 +142,7 @@
         <span class="verdict-stamp">SIZING_CAVEAT &middot; NO_EDGE</span>
       </div>
       <div class="case-panel">
-        <h4>Kenapa Kelly = 0</h4>
+        <h4>Why Kelly = 0</h4>
         <div class="kelly-formula">
 f* = (b&middot;p &minus; q) / b<br>
 b = 0.844 &nbsp;(payoff ratio)<br>
@@ -150,22 +150,22 @@ p = 0.408 &nbsp;(win rate)<br>
 q = 0.592 &nbsp;(1 &minus; p)<br>
 <br>
 f* = (0.844&times;0.408 &minus; 0.592) / 0.844<br>
-f* = <span class="result">&minus;0.29</span> &nbsp;&rarr; clipped ke 0
+f* = <span class="result">&minus;0.29</span> &nbsp;&rarr; clipped to 0
         </div>
-        <p class="note" style="margin-top:0.9rem;">Expected value negatif secara historis pada bucket ini (forward return 20 hari rata-rata &minus;3.1%). Sistem menolak menyarankan ukuran posisi apa pun, bukan membulatkan ke angka kecil yang terlihat aman.</p>
+        <p class="note" style="margin-top:0.9rem;">Historically negative expected value on this bucket (average forward 20-day return of &minus;3.1%). The system declines to suggest any position size rather than rounding to a small number that merely looks safe.</p>
       </div>
     </div>
   </section>
 
   <section id="honesty" class="reveal">
     <h2 class="head">Honesty beat</h2>
-    <h3 class="subhead">Berapa sinyal yang punya edge terbukti?</h3>
-    <p class="lede">Diukur, bukan diasumsikan — inilah bedanya dengan kebanyakan tool sinyal yang selalu punya jawaban.</p>
+    <h3 class="subhead">How many signals have a proven edge?</h3>
+    <p class="lede">Measured, not assumed — this is what separates it from most signal tools that always have an answer.</p>
 
     <div class="honesty">
       <div class="honesty-head">
-        <div class="big"><span data-countup="0">0</span> dari 259</div>
-        <div class="cap">ticker berlabel sinyal aktif saat ini punya edge yang lolos ambang statistik (min. 50 observasi, Kelly &gt; 0)</div>
+        <div class="big"><span data-countup="0">0</span> of 259</div>
+        <div class="cap">currently signal-labeled tickers clear the statistical bar for a proven edge (min. 50 observations, Kelly &gt; 0)</div>
       </div>
       <div class="honesty-body">
         <div class="buckets">
@@ -184,29 +184,29 @@ f* = <span class="result">&minus;0.29</span> &nbsp;&rarr; clipped ke 0
           <div class="bucket-row" data-tip>
             <span class="bucket-label">Neutral</span>
             <div class="bucket-track"><div class="bucket-fill" style="--w:39.7%"></div></div>
-            <span class="bucket-n">N=16.837 &middot; win 39.7% &middot; <b style="color:var(--dist)">NO_EDGE</b></span>
+            <span class="bucket-n">N=16,837 &middot; win 39.7% &middot; <b style="color:var(--dist)">NO_EDGE</b></span>
             <span class="tip">Payoff 0.87&times; &middot; fwd ret 20D &minus;3.5%</span>
           </div>
           <div class="bucket-row" data-tip>
             <span class="bucket-label">Stealth accum.</span>
             <div class="bucket-track"><div class="bucket-fill edge" style="--w:100%"></div></div>
             <span class="bucket-n">N=3 &middot; win 100% &middot; <b style="color:var(--accent-strong)">INSUFFICIENT_SAMPLE</b></span>
-            <span class="tip">Terlalu sedikit observasi untuk disimpulkan</span>
+            <span class="tip">Too few observations to conclude anything</span>
           </div>
         </div>
       </div>
     </div>
 
     <p class="quote">
-      &ldquo;Sistem yang mengukur edge-nya sendiri dan menolak memberi sizing ketika edge tidak ada, lebih bernilai daripada sistem yang selalu punya jawaban.&rdquo;
-      <cite>— MESSE Copilot, sesi CoCo CLI, 5 Agustus 2026</cite>
+      &ldquo;A system that measures its own edge and declines to size when there isn't one is worth more than a system that always has an answer.&rdquo;
+      <cite>— MESSE Copilot, CoCo CLI session, August 5, 2026</cite>
     </p>
   </section>
 
   <section id="architecture" class="reveal">
-    <h2 class="head">Cara kerja</h2>
-    <h3 class="subhead">Semua kompute jalan di Snowflake</h3>
-    <p class="lede">Dari export data mentah MESSE sampai jawaban agent, tidak ada logika bisnis yang lari di aplikasi luar — supaya tiap klaim bisa ditelusuri balik ke SQL yang menghasilkannya.</p>
+    <h2 class="head">How it works</h2>
+    <h3 class="subhead">Every computation runs inside Snowflake</h3>
+    <p class="lede">From raw MESSE exports to the agent's answer, no business logic runs in an external app — so every claim can be traced back to the SQL that produced it.</p>
     <div class="flow">
       <span class="flow-step">MESSE MySQL</span>
       <span class="flow-arrow">&rarr;</span>
@@ -218,18 +218,18 @@ f* = <span class="result">&minus;0.29</span> &nbsp;&rarr; clipped ke 0
       <span class="flow-arrow">&rarr;</span>
       <span class="flow-step">CoCo CLI agent</span>
     </div>
-    <p class="note" style="margin-top:1.25rem;">Karena MESSE tidak punya data transaksi broker IDX, layer MART dibangun dari skor akumulasi/distribusi milik MESSE sendiri (bukan broker net-flow) — lihat "Known gaps" di README repo untuk detail lengkap keputusan ini dan batas-batasnya.</p>
+    <p class="note" style="margin-top:1.25rem;">Because MESSE has no IDX broker transaction data, the MART layer is built from MESSE's own accumulation/distribution factor scores (not broker net flow) — see "Known gaps" in the repo README for the full reasoning and limits behind that call.</p>
   </section>
 
 </main>
 
 <footer>
-  <span>Snapshot data: 5 Agustus 2026 &middot; MESSE production data, diproses lewat pipeline Snowflake di bawah ini.</span>
+  <span>Data snapshot: August 5, 2026 &middot; MESSE production data, processed through the Snowflake pipeline below.</span>
   <span>
-    <a href="https://github.com/Alphine/snowflake_messe" target="_blank" rel="noopener">Kode sumber &amp; SQL lengkap &#8599;</a>
+    <a href="https://github.com/Alphine/snowflake_messe" target="_blank" rel="noopener">Full source &amp; SQL &#8599;</a>
   </span>
 </footer>
 
-<script src="assets/app.js"></script>
+<script src="../assets/app.js"></script>
 </body>
 </html>
