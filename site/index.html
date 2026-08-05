@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MESSE Bandarmologi Copilot — Snowflake CoCo CLI Hackathon 2026</title>
+<style>
+  @font-face {
+    font-family: 'IBM Plex Mono Fallback';
+    src: local('Consolas'), local('SFMono-Regular'), local('Menlo');
+  }
+
+  :root {
+    --ink-950: #15120e;
+    --ink-900: #1c1712;
+    --ink-800: #292019;
+    --ink-700: #3c3026;
+    --paper: #f5efe2;
+    --paper-dim: #e9e0cb;
+    --ink-on-paper: #211a12;
+    --muted-on-paper: #6b5d47;
+    --accent: #c98a35;
+    --accent-strong: #a86b1f;
+    --accum: #4c7266;
+    --accum-bg: rgba(76, 114, 102, 0.12);
+    --dist: #a8503a;
+    --dist-bg: rgba(168, 80, 58, 0.12);
+    --rule: rgba(33, 26, 18, 0.16);
+    --shadow: 0 1px 0 rgba(0,0,0,0.04);
+    --bg: var(--paper);
+    --surface: #fffdf7;
+    --text: var(--ink-on-paper);
+    --text-muted: var(--muted-on-paper);
+    --border: var(--rule);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: var(--ink-950);
+      --surface: var(--ink-900);
+      --text: #efe6d4;
+      --text-muted: #b0a184;
+      --border: rgba(239, 230, 212, 0.14);
+      --accent: #e0a84f;
+      --accent-strong: #f2bd6a;
+      --accum: #7ea895;
+      --accum-bg: rgba(126, 168, 149, 0.14);
+      --dist: #d17a5f;
+      --dist-bg: rgba(209, 122, 95, 0.14);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: var(--ink-950);
+    --surface: var(--ink-900);
+    --text: #efe6d4;
+    --text-muted: #b0a184;
+    --border: rgba(239, 230, 212, 0.14);
+    --accent: #e0a84f;
+    --accent-strong: #f2bd6a;
+    --accum: #7ea895;
+    --accum-bg: rgba(126, 168, 149, 0.14);
+    --dist: #d17a5f;
+    --dist-bg: rgba(209, 122, 95, 0.14);
+  }
+  :root[data-theme="light"] {
+    --bg: var(--paper);
+    --surface: #fffdf7;
+    --text: var(--ink-on-paper);
+    --text-muted: var(--muted-on-paper);
+    --border: var(--rule);
+    --accent: #c98a35;
+    --accent-strong: #a86b1f;
+    --accum: #4c7266;
+    --accum-bg: rgba(76, 114, 102, 0.12);
+    --dist: #a8503a;
+    --dist-bg: rgba(168, 80, 58, 0.12);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .sans { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; }
+  .mono {
+    font-family: ui-monospace, 'SFMono-Regular', Consolas, 'IBM Plex Mono Fallback', Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  a { color: var(--accent-strong); }
+
+  /* ---------- ticker tape ---------- */
+  .tape-wrap {
+    background: var(--ink-950);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .tape {
+    display: inline-flex;
+    gap: 2.5rem;
+    padding: 0.55rem 0;
+    animation: scroll-tape 38s linear infinite;
+    will-change: transform;
+  }
+  @keyframes scroll-tape {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tape { animation: none; }
+    .tape-wrap { overflow-x: auto; }
+  }
+  .tape-item {
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    color: #cbb98f;
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+  .tape-item b { color: #f0e3c4; font-weight: 600; }
+  .tape-item .up { color: #8fbfa5; }
+  .tape-item .down { color: #d78e77; }
+  .tape-item .flat { color: #cbb98f; }
+
+  /* ---------- masthead ---------- */
+  header.masthead {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 3rem 1.75rem 2rem;
+    border-bottom: 3px double var(--border);
+  }
+  .eyebrow {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1.1rem;
+  }
+  h1.title {
+    font-size: clamp(2rem, 4.2vw, 2.9rem);
+    line-height: 1.08;
+    margin: 0 0 0.6rem;
+    text-wrap: balance;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .dek {
+    font-size: 1.12rem;
+    color: var(--text-muted);
+    max-width: 62ch;
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  main { max-width: 880px; margin: 0 auto; padding: 0 1.75rem 5rem; }
+
+  section { padding-top: 2.75rem; }
+  section + section { border-top: 1px solid var(--border); }
+
+  h2.head {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: var(--accent-strong);
+    margin: 0 0 0.35rem;
+  }
+  h3.subhead {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+    text-wrap: balance;
+  }
+  p.lede { font-size: 1.03rem; max-width: 66ch; color: var(--text); }
+  p.note { color: var(--text-muted); font-size: 0.95rem; max-width: 66ch; }
+
+  /* ---------- disclosure banner ---------- */
+  .disclosure {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 3px;
+    padding: 1rem 1.25rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 0.92rem;
+    color: var(--text);
+    margin: 1.5rem 0 0;
+  }
+  .disclosure b { color: var(--accent-strong); }
+
+  /* ---------- watchlist table ---------- */
+  .table-scroll { overflow-x: auto; margin-top: 1.25rem; }
+  table.watchlist {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 0.88rem;
+    min-width: 620px;
+  }
+  table.watchlist caption { text-align: left; caption-side: bottom; padding-top: 0.6rem; color: var(--text-muted); font-size: 0.8rem; }
+  table.watchlist th {
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    padding: 0.5rem 0.7rem;
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+  table.watchlist td {
+    padding: 0.62rem 0.7rem;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  table.watchlist tbody tr:hover { background: var(--surface); }
+  .ticker-cell { font-weight: 700; }
+  .ticker-cell .name { display: block; font-weight: 400; color: var(--text-muted); font-size: 0.78rem; white-space: normal; }
+  .num { text-align: right; font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace; font-variant-numeric: tabular-nums; }
+  .pos { color: var(--accum); }
+  .neg { color: var(--dist); }
+  .score-bar-wrap { display: flex; align-items: center; gap: 0.5rem; justify-content: flex-end; }
+  .score-bar {
+    width: 54px; height: 6px; border-radius: 3px;
+    background: var(--paper-dim);
+    overflow: hidden;
+    position: relative;
+  }
+  :root[data-theme="dark"] .score-bar { background: var(--ink-800); }
+  @media (prefers-color-scheme: dark) { .score-bar { background: var(--ink-800); } }
+  .score-bar > span { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
+  .pill {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    background: var(--accum-bg);
+    color: var(--accum);
+    white-space: nowrap;
+  }
+
+  /* ---------- sizing case card ---------- */
+  .case {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  @media (min-width: 640px) { .case { grid-template-columns: 1.1fr 1fr; } }
+  .case-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.25rem 1.4rem;
+  }
+  .case-panel h4 {
+    margin: 0 0 0.9rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  dl.metrics { margin: 0; display: grid; grid-template-columns: 1fr auto; row-gap: 0.55rem; column-gap: 1rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 0.92rem;}
+  dl.metrics dt { color: var(--text-muted); }
+  dl.metrics dd { margin: 0; font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace; font-variant-numeric: tabular-nums; text-align: right; font-weight: 600; }
+  .verdict-stamp {
+    margin-top: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 2px solid var(--dist);
+    color: var(--dist);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    font-size: 0.85rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 4px;
+    transform: rotate(-1.5deg);
+  }
+  .kelly-formula {
+    font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace;
+    font-size: 0.85rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.8rem 1rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+  .kelly-formula .result { color: var(--dist); font-weight: 700; }
+
+  /* ---------- honesty beat ---------- */
+  .honesty {
+    margin-top: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .honesty-head {
+    padding: 1.1rem 1.4rem;
+    background: var(--dist-bg);
+    border-bottom: 1px solid var(--border);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+  .honesty-head .big {
+    font-family: Georgia, serif;
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: var(--dist);
+    line-height: 1;
+  }
+  .honesty-head .cap { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.35rem; }
+  .honesty-body { padding: 1.4rem; }
+  .buckets { display: grid; gap: 0.75rem; }
+  .bucket-row {
+    display: grid;
+    grid-template-columns: 140px 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 0.88rem;
+  }
+  .bucket-label { font-weight: 600; }
+  .bucket-track { height: 8px; border-radius: 4px; background: var(--paper-dim); position: relative; overflow: hidden; }
+  :root[data-theme="dark"] .bucket-track { background: var(--ink-800); }
+  @media (prefers-color-scheme: dark) { .bucket-track { background: var(--ink-800); } }
+  .bucket-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--text-muted); opacity: 0.55; border-radius: 4px; }
+  .bucket-fill.zero { background: var(--dist); width: 3px !important; opacity: 1; }
+  .bucket-n { font-family: ui-monospace, monospace; font-variant-numeric: tabular-nums; color: var(--text-muted); white-space: nowrap; }
+
+  /* ---------- architecture strip ---------- */
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 0.85rem;
+    margin-top: 1.25rem;
+  }
+  .flow-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 0.5rem 0.8rem;
+    font-weight: 600;
+  }
+  .flow-arrow { color: var(--text-muted); font-size: 0.9rem; }
+
+  /* ---------- footer ---------- */
+  footer {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 2.5rem 1.75rem 3.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+  }
+  footer a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--border); }
+  footer a:hover { border-color: var(--accent); }
+
+  .quote {
+    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    color: var(--text);
+    border-left: 3px solid var(--accent);
+    padding-left: 1.2rem;
+    margin: 1.5rem 0 0;
+    max-width: 58ch;
+  }
+  .quote cite {
+    display: block;
+    font-style: normal;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-top: 0.6rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="tape-wrap" role="marquee" aria-label="Ringkasan sinyal watchlist">
+  <div class="tape">
+    <span class="tape-item"><b>PTBA</b> 82.24 <span class="flat">+0.9%</span></span>
+    <span class="tape-item"><b>CMNT</b> 79.81 <span class="up">+2.5%</span></span>
+    <span class="tape-item"><b>EXCL</b> 79.22 <span class="flat">+0.4%</span></span>
+    <span class="tape-item"><b>CPIN</b> 73.10 <span class="up">+1.6%</span></span>
+    <span class="tape-item"><b>UNTR</b> 70.80 <span class="down">−1.8%</span></span>
+    <span class="tape-item"><b>259</b> ticker discanning &middot; <b>0</b> edge terbukti</span>
+    <span class="tape-item"><b>PTBA</b> 82.24 <span class="flat">+0.9%</span></span>
+    <span class="tape-item"><b>CMNT</b> 79.81 <span class="up">+2.5%</span></span>
+    <span class="tape-item"><b>EXCL</b> 79.22 <span class="flat">+0.4%</span></span>
+    <span class="tape-item"><b>CPIN</b> 73.10 <span class="up">+1.6%</span></span>
+    <span class="tape-item"><b>UNTR</b> 70.80 <span class="down">−1.8%</span></span>
+    <span class="tape-item"><b>259</b> ticker discanning &middot; <b>0</b> edge terbukti</span>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="eyebrow">
+    <span>MESSE &times; Snowflake CoCo CLI Hackathon 2026</span>
+    <span>Problem Statement #4 — Capital Markets, Indonesia</span>
+  </div>
+  <h1 class="title">A bandarmologi copilot that measures its own edge before it sizes anything.</h1>
+  <p class="dek">Cortex Analyst atas skema MART di Snowflake, dijalankan lewat CoCo CLI. Setiap klaim dijawab dengan query langsung ke data — dan menolak memberi ukuran posisi ketika edge-nya tidak terbukti secara statistik.</p>
+</header>
+
+<main>
+
+  <section id="watchlist">
+    <h2 class="head">Live snapshot — 5 Agustus 2026</h2>
+    <h3 class="subhead">Watchlist akumulasi diam-diam</h3>
+    <p class="lede">Sinyal disusun dari skor akumulasi/distribusi MESSE sendiri, di-rank ulang lintas-ticker di Snowflake — dipilih yang persistence-nya penuh dan harga belum bergerak jauh.</p>
+
+    <div class="table-scroll">
+      <table class="watchlist">
+        <caption>Sumber: MART.VW_WATCHLIST, difilter likuiditas &ge; IDR 5 miliar/hari. Diambil dari sesi CoCo CLI langsung.</caption>
+        <thead>
+          <tr>
+            <th>Ticker</th>
+            <th class="num">Bandar score</th>
+            <th class="num">Persistence</th>
+            <th class="num">Ret 20D</th>
+            <th class="num">Value/hari</th>
+            <th>Sinyal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="ticker-cell">PTBA<span class="name">Bukit Asam Tbk &middot; Mining</span></td>
+            <td class="num"><div class="score-bar-wrap">82.2<div class="score-bar"><span style="width:82%"></span></div></div></td>
+            <td class="num">20/20 hr</td>
+            <td class="num pos">+0.86%</td>
+            <td class="num">13.5 M</td>
+            <td><span class="pill">Accumulation</span></td>
+          </tr>
+          <tr>
+            <td class="ticker-cell">CMNT<span class="name">Cemindo Gemilang Tbk &middot; Basic Industry</span></td>
+            <td class="num"><div class="score-bar-wrap">79.8<div class="score-bar"><span style="width:80%"></span></div></div></td>
+            <td class="num">20/20 hr</td>
+            <td class="num pos">+2.53%</td>
+            <td class="num">10.4 M</td>
+            <td><span class="pill">Accumulation</span></td>
+          </tr>
+          <tr>
+            <td class="ticker-cell">EXCL<span class="name">XL Axiata Tbk &middot; Infrastructure</span></td>
+            <td class="num"><div class="score-bar-wrap">79.2<div class="score-bar"><span style="width:79%"></span></div></div></td>
+            <td class="num">20/20 hr</td>
+            <td class="num pos">+0.40%</td>
+            <td class="num">6.0 M</td>
+            <td><span class="pill">Accumulation</span></td>
+          </tr>
+          <tr>
+            <td class="ticker-cell">CPIN<span class="name">Charoen Pokphand Tbk &middot; Consumer</span></td>
+            <td class="num"><div class="score-bar-wrap">73.1<div class="score-bar"><span style="width:73%"></span></div></div></td>
+            <td class="num">20/20 hr</td>
+            <td class="num pos">+1.60%</td>
+            <td class="num">16.6 M</td>
+            <td><span class="pill">Accumulation</span></td>
+          </tr>
+          <tr>
+            <td class="ticker-cell">UNTR<span class="name">United Tractors Tbk &middot; Industrial</span></td>
+            <td class="num"><div class="score-bar-wrap">70.8<div class="score-bar"><span style="width:71%"></span></div></div></td>
+            <td class="num">19/20 hr</td>
+            <td class="num neg">−1.80%</td>
+            <td class="num">52.9 M</td>
+            <td><span class="pill">Accumulation</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="disclosure">
+      <b>Bukan broker order flow.</b> MESSE tidak mengumpulkan data transaksi broker IDX — <code>BANDAR_SCORE</code> adalah proxy dari pola harga/volume milik MESSE sendiri, di-rank ulang di Snowflake. Agent selalu menyatakan ini secara eksplisit, tidak dibiarkan tersirat dari nama "bandarmologi".
+    </div>
+  </section>
+
+  <section id="sizing">
+    <h2 class="head">Studi kasus</h2>
+    <h3 class="subhead">Skor tertinggi bukan jaminan ukuran posisi</h3>
+    <p class="lede">PTBA memimpin watchlist dengan skor 82.2 dan persistence penuh. Tapi Fractional Kelly dihitung dari <em>forward return terukur</em>, bukan diasumsikan — dan di sini hasilnya menolak sizing.</p>
+
+    <div class="case">
+      <div class="case-panel">
+        <h4>PTBA — position sizing</h4>
+        <dl class="metrics">
+          <dt>Bandar score</dt><dd>82.24</dd>
+          <dt>Sample size</dt><dd>997 obs.</dd>
+          <dt>Win rate</dt><dd>40.8%</dd>
+          <dt>Avg win / avg loss</dt><dd>+10.7% / −12.7%</dd>
+          <dt>Payoff ratio</dt><dd>0.84&times;</dd>
+          <dt>Suggested weight</dt><dd>0.00%</dd>
+        </dl>
+        <span class="verdict-stamp">SIZING_CAVEAT &middot; NO_EDGE</span>
+      </div>
+      <div class="case-panel">
+        <h4>Kenapa Kelly = 0</h4>
+        <div class="kelly-formula">
+f* = (b&middot;p &minus; q) / b<br>
+b = 0.844 &nbsp;(payoff ratio)<br>
+p = 0.408 &nbsp;(win rate)<br>
+q = 0.592 &nbsp;(1 &minus; p)<br>
+<br>
+f* = (0.844&times;0.408 &minus; 0.592) / 0.844<br>
+f* = <span class="result">&minus;0.29</span> &nbsp;&rarr; clipped to 0
+        </div>
+        <p class="note" style="margin-top:0.9rem;">Expected value negatif secara historis pada bucket ini (forward return 20 hari rata-rata &minus;3.1%). Sistem menolak menyarankan ukuran posisi apa pun, bukan membulatkan ke angka kecil yang terlihat aman.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="honesty">
+    <h2 class="head">Honesty beat</h2>
+    <h3 class="subhead">Berapa sinyal yang punya edge terbukti?</h3>
+    <p class="lede">Diukur, bukan diasumsikan — inilah bedanya dengan kebanyakan tool sinyal yang selalu punya jawaban.</p>
+
+    <div class="honesty">
+      <div class="honesty-head">
+        <div class="big">0 dari 259</div>
+        <div class="cap">ticker berlabel sinyal aktif saat ini punya edge yang lolos ambang statistik (min. 50 observasi, Kelly &gt; 0)</div>
+      </div>
+      <div class="honesty-body">
+        <div class="buckets">
+          <div class="bucket-row">
+            <span class="bucket-label">Accumulation</span>
+            <div class="bucket-track"><div class="bucket-fill zero"></div></div>
+            <span class="bucket-n">N=997 &middot; win 40.8% &middot; <b style="color:var(--dist)">NO_EDGE</b></span>
+          </div>
+          <div class="bucket-row">
+            <span class="bucket-label">Distribution</span>
+            <div class="bucket-track"><div class="bucket-fill zero"></div></div>
+            <span class="bucket-n">N=368 &middot; win 37.5% &middot; <b style="color:var(--dist)">NO_EDGE</b></span>
+          </div>
+          <div class="bucket-row">
+            <span class="bucket-label">Neutral</span>
+            <div class="bucket-track"><div class="bucket-fill zero"></div></div>
+            <span class="bucket-n">N=16,837 &middot; win 39.7% &middot; <b style="color:var(--dist)">NO_EDGE</b></span>
+          </div>
+          <div class="bucket-row">
+            <span class="bucket-label">Stealth accum.</span>
+            <div class="bucket-track"><div class="bucket-fill" style="width:100%; opacity:1; background:var(--accent);"></div></div>
+            <span class="bucket-n">N=3 &middot; win 100% &middot; <b style="color:var(--accent-strong)">INSUFFICIENT_SAMPLE</b></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="quote">
+      &ldquo;Sistem yang mengukur edge-nya sendiri dan menolak memberi sizing ketika edge tidak ada, lebih bernilai daripada sistem yang selalu punya jawaban.&rdquo;
+      <cite>— MESSE Copilot, sesi CoCo CLI, 5 Agustus 2026</cite>
+    </p>
+  </section>
+
+  <section id="architecture">
+    <h2 class="head">Cara kerja</h2>
+    <h3 class="subhead">Semua kompute jalan di Snowflake</h3>
+    <p class="lede">Dari export data mentah MESSE sampai jawaban agent, tidak ada logika bisnis yang lari di aplikasi luar — supaya tiap klaim bisa ditelusuri balik ke SQL yang menghasilkannya.</p>
+    <div class="flow">
+      <span class="flow-step">MESSE MySQL</span>
+      <span class="flow-arrow">&rarr;</span>
+      <span class="flow-step">RAW (Snowflake)</span>
+      <span class="flow-arrow">&rarr;</span>
+      <span class="flow-step">MART &middot; signal + Kelly</span>
+      <span class="flow-arrow">&rarr;</span>
+      <span class="flow-step">Cortex Analyst</span>
+      <span class="flow-arrow">&rarr;</span>
+      <span class="flow-step">CoCo CLI agent</span>
+    </div>
+    <p class="note" style="margin-top:1.25rem;">Karena MESSE tidak punya data transaksi broker IDX, layer MART dibangun dari skor akumulasi/distribusi milik MESSE sendiri (bukan broker net-flow) — lihat "Known gaps" di README repo untuk detail lengkap keputusan ini dan batas-batasnya.</p>
+  </section>
+
+</main>
+
+<footer>
+  <span>Snapshot data: 5 Agustus 2026 &middot; MESSE production data, diproses lewat pipeline Snowflake di bawah ini.</span>
+  <span>
+    <a href="https://github.com/Alphine/snowflake_messe" target="_blank" rel="noopener">Kode sumber &amp; SQL lengkap &#8599;</a>
+  </span>
+</footer>
+
+</body>
+</html>
