@@ -1,0 +1,211 @@
+name: messe_idx_bandarmologi
+description: >
+  Semantic layer over Indonesia Stock Exchange (IDX) daily prices and MESSE's
+  own precomputed accumulation/distribution factor scores, re-ranked into a
+  bandarmologi-style signal. IMPORTANT HONESTY NOTE: "bandarmologi" classically
+  means inferring large-player intent from broker-level order flow. MESSE does
+  not collect IDX broker transaction data — there is no broker feed available.
+  BANDAR_SCORE here is a price/volume-pattern proxy (MESSE's own accumulation,
+  distribution and volume factor scores, cross-sectionally re-ranked), not
+  measured broker order flow. Always describe it that way in answers — do not
+  imply broker identity or foreign/domestic flow, since that data doesn't exist.
+
+tables:
+
+  - name: watchlist
+    description: >
+      Latest bandarmologi signal per ticker. One row per ticker, most recent
+      trading day. This is the primary table for screening questions.
+    base_table:
+      database: MESSE
+      schema: MART
+      table: VW_WATCHLIST
+    dimensions:
+      - name: ticker
+        expr: TICKER
+        data_type: VARCHAR
+        description: IDX ticker code, 4 letters (e.g. BBCA, TLKM, ANTM).
+        unique: true
+        sample_values: [BBCA, BBRI, TLKM, ASII, ANTM]
+      - name: company_name
+        expr: COMPANY_NAME
+        data_type: VARCHAR
+        description: Registered company name of the issuer.
+      - name: sector
+        expr: SECTOR
+        data_type: VARCHAR
+        description: IDX-IC sector classification.
+        sample_values: [Financials, Energy, Basic Materials, Infrastructures]
+      - name: signal_label
+        expr: SIGNAL_LABEL
+        data_type: VARCHAR
+        description: >
+          Bandarmologi-proxy regime classification, derived from MESSE's own
+          accumulation/distribution factor scores (not broker order flow).
+          STEALTH_ACCUMULATION = high accumulation-factor score, low
+          distribution, persistent over 20 days, price hasn't moved yet.
+          ACCUMULATION = net positive accumulation signal. DISTRIBUTION = net
+          negative (distribution-dominant). NEUTRAL = no clear footprint.
+        sample_values: [STEALTH_ACCUMULATION, ACCUMULATION, NEUTRAL, DISTRIBUTION]
+      - name: messe_bandar_signal
+        expr: MESSE_BANDAR_SIGNAL
+        data_type: VARCHAR
+        description: >
+          MESSE's own pre-existing bandar signal label, carried through for
+          cross-reference only. Frequently NULL — MESSE does not run this
+          scoring for every ticker/day. Not used to compute signal_label.
+      - name: messe_smart_money_label
+        expr: MESSE_SMART_MONEY_LABEL
+        data_type: VARCHAR
+        description: >
+          MESSE's own pre-existing smart-money label, carried through for
+          cross-reference only. Frequently NULL for the same reason as
+          messe_bandar_signal.
+    time_dimensions:
+      - name: trade_date
+        expr: TRADE_DATE
+        data_type: DATE
+        description: Trading date of the signal.
+    measures:
+      - name: bandar_score
+        expr: BANDAR_SCORE
+        data_type: FLOAT
+        default_aggregation: avg
+        description: >
+          Composite 0-100 score, cross-sectionally ranked per day. Blends
+          accumulation-factor intensity (40%), anti-distribution conviction
+          (25%), signal persistence over 20 days (20%), and price quietness
+          (15%). Higher means a stronger accumulation-pattern footprint.
+          Built from MESSE's own precomputed factor scores, NOT broker order
+          flow — there is no broker transaction data behind this.
+      - name: persist_days_20d
+        expr: PERSIST_DAYS_20D
+        data_type: NUMBER
+        default_aggregation: avg
+        description: >
+          Number of days in the trailing 20-day window where the accumulation
+          factor score exceeded the distribution factor score. Higher means a
+          more sustained accumulation pattern.
+      - name: ret_20d_pct
+        expr: RET_20D_PCT
+        data_type: FLOAT
+        default_aggregation: avg
+        description: Price return over the trailing 20 trading days, in percent.
+      - name: avg_value_20d
+        expr: AVG_VALUE_20D
+        data_type: NUMBER
+        default_aggregation: avg
+        description: Average daily traded value in IDR over 20 days (liquidity).
+
+  - name: position_sizing
+    description: >
+      Risk-sizing output. Suggested portfolio weight derived from Fractional
+      Kelly on the EMPIRICALLY MEASURED edge of each signal bucket. This is
+      risk sizing and decision support, not investment advice.
+    base_table:
+      database: MESSE
+      schema: MART
+      table: VW_POSITION_SIZING
+    dimensions:
+      - name: ticker
+        expr: TICKER
+        data_type: VARCHAR
+        unique: true
+      - name: signal_label
+        expr: SIGNAL_LABEL
+        data_type: VARCHAR
+      - name: sizing_caveat
+        expr: SIZING_CAVEAT
+        data_type: VARCHAR
+        description: >
+          Why a suggested weight should be discounted or ignored.
+          INSUFFICIENT_SAMPLE = fewer than 50 historical observations.
+          NO_EDGE = measured Kelly fraction is zero or negative.
+          HIGH_VOLATILITY = 20-day volatility above 5% daily. OK = none apply.
+        sample_values: [OK, NO_EDGE, INSUFFICIENT_SAMPLE, HIGH_VOLATILITY]
+    measures:
+      - name: suggested_weight
+        expr: SUGGESTED_WEIGHT
+        data_type: FLOAT
+        default_aggregation: avg
+        description: >
+          Suggested fraction of portfolio, 0 to 0.10. Quarter-Kelly, capped at
+          10%, halved when the sample is thin or volatility is high.
+      - name: kelly_full
+        expr: KELLY_FULL
+        data_type: FLOAT
+        default_aggregation: avg
+        description: Full Kelly fraction before the 25% haircut and caps.
+      - name: win_rate
+        expr: WIN_RATE
+        data_type: FLOAT
+        default_aggregation: avg
+        description: Historical share of 20-day forward returns above zero for this bucket.
+      - name: payoff_ratio
+        expr: PAYOFF_RATIO
+        data_type: FLOAT
+        default_aggregation: avg
+        description: Average winning return divided by average losing return.
+      - name: edge_sample_size
+        expr: EDGE_SAMPLE_SIZE
+        data_type: NUMBER
+        default_aggregation: max
+        description: Number of historical observations backing this bucket's edge.
+
+verified_queries:
+  - name: stealth_accumulation_screen
+    question: Saham apa yang lagi diakumulasi diam-diam?
+    sql: |
+      -- NOTE (2026-08-05): STEALTH_ACCUMULATION requires the top 85th
+      -- percentile on a blended 4-factor rank, on the day this was checked
+      -- 0 of 259 scored tickers cleared that bar. Falls back to the closest
+      -- ACCUMULATION-labeled tickers rather than returning nothing — the
+      -- SIGNAL_LABEL column is kept in the output so the agent can state
+      -- plainly which case it's showing rather than implying stealth
+      -- accumulation exists when it doesn't. The extra >=5bn liquidity
+      -- filter from the original design was dropped as redundant: the
+      -- 1bn/day floor is already enforced upstream in MART.BANDAR_SCORE.
+      SELECT TICKER, COMPANY_NAME, SECTOR, SIGNAL_LABEL, BANDAR_SCORE,
+             PERSIST_DAYS_20D, RET_20D_PCT
+      FROM MESSE.MART.VW_WATCHLIST
+      WHERE SIGNAL_LABEL IN ('STEALTH_ACCUMULATION', 'ACCUMULATION')
+      ORDER BY IFF(SIGNAL_LABEL = 'STEALTH_ACCUMULATION', 0, 1), BANDAR_SCORE DESC
+      LIMIT 20;
+
+  - name: persistent_accumulation_screen
+    question: Saham mana yang pola akumulasinya paling konsisten belakangan ini?
+    sql: |
+      SELECT TICKER, COMPANY_NAME, BANDAR_SCORE,
+             PERSIST_DAYS_20D, RET_20D_PCT
+      FROM MESSE.MART.VW_WATCHLIST
+      WHERE SIGNAL_LABEL IN ('ACCUMULATION', 'STEALTH_ACCUMULATION')
+      ORDER BY PERSIST_DAYS_20D DESC, BANDAR_SCORE DESC
+      LIMIT 20;
+
+  - name: sizing_with_real_edge
+    question: Berapa besar posisi yang wajar?
+    sql: |
+      SELECT TICKER, SIGNAL_LABEL, BANDAR_SCORE, WIN_RATE, PAYOFF_RATIO,
+             KELLY_FULL, SUGGESTED_WEIGHT, SIZING_CAVEAT, EDGE_SAMPLE_SIZE
+      FROM MESSE.MART.VW_POSITION_SIZING
+      WHERE SIZING_CAVEAT = 'OK' AND SUGGESTED_WEIGHT > 0
+      ORDER BY SUGGESTED_WEIGHT DESC
+      LIMIT 20;
+
+  - name: distribution_warning
+    question: Saham apa di sektor saya yang sedang didistribusi?
+    sql: |
+      SELECT TICKER, COMPANY_NAME, SECTOR, BANDAR_SCORE, RET_20D_PCT
+      FROM MESSE.MART.VW_WATCHLIST
+      WHERE SIGNAL_LABEL = 'DISTRIBUTION'
+      ORDER BY BANDAR_SCORE ASC
+      LIMIT 20;
+
+  - name: honesty_beat_no_edge_disclosure
+    question: Apakah sinyal bandarmologi ini sudah terbukti punya edge?
+    sql: |
+      SELECT SIGNAL_LABEL, SIZING_CAVEAT, COUNT(*) AS N_TICKERS,
+             AVG(WIN_RATE) AS AVG_WIN_RATE, AVG(KELLY_FULL) AS AVG_KELLY_FULL
+      FROM MESSE.MART.VW_POSITION_SIZING
+      GROUP BY SIGNAL_LABEL, SIZING_CAVEAT
+      ORDER BY SIGNAL_LABEL;

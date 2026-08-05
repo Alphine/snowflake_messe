@@ -1,0 +1,6 @@
+u808021404_messe.csv
+market_data.csv
+expert_scores.csv
+stock_scores.csv
+*.pyc
+__pycache__/

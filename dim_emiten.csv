@@ -1,0 +1,427 @@
+TICKER,COMPANY_NAME,SECTOR,SUB_SECTOR,LISTED_SHARES,FREE_FLOAT_PCT,IS_LQ45,IS_ACTIVE
+BBCA,Bank Central Asia Tbk,Finance,Banking,,,TRUE,TRUE
+BBRI,Bank Rakyat Indonesia Tbk,Finance,Banking,,,TRUE,TRUE
+BMRI,Bank Mandiri Tbk,Finance,Banking,,,TRUE,TRUE
+BBNI,Bank Negara Indonesia Tbk,Finance,Banking,,,TRUE,TRUE
+BRIS,Bank Syariah Indonesia Tbk,Finance,Banking,,,TRUE,TRUE
+BTPS,Bank BTPN Syariah Tbk,Finance,Banking,,,FALSE,TRUE
+BNGA,Bank CIMB Niaga Tbk,Finance,Banking,,,TRUE,TRUE
+BJBR,Bank Pembangunan Daerah Jawa Barat Tbk,Finance,Banking,,,TRUE,TRUE
+BNII,Bank Maybank Indonesia Tbk,Finance,Banking,,,FALSE,TRUE
+PNBN,Bank Pan Indonesia Tbk,Finance,Banking,,,TRUE,TRUE
+ADMF,Adira Dinamika Multi Finance Tbk,Finance,Multifinance,,,FALSE,TRUE
+BFIN,BFI Finance Indonesia Tbk,Finance,Multifinance,,,FALSE,TRUE
+WOMF,Wahana Ottomitra Multiartha Tbk,Finance,Multifinance,,,FALSE,TRUE
+UNVR,Unilever Indonesia Tbk,Consumer,FMCG,,,TRUE,TRUE
+ICBP,Indofood CBP Sukses Makmur Tbk,Consumer,Food & Beverage,,,TRUE,TRUE
+INDF,Indofood Sukses Makmur Tbk,Consumer,Food & Beverage,,,TRUE,TRUE
+MYOR,Mayora Indah Tbk,Consumer,Food & Beverage,,,TRUE,TRUE
+KLBF,Kalbe Farma Tbk,Consumer,Pharmaceuticals,,,TRUE,TRUE
+SIDO,Industri Jamu dan Farmasi Sido Muncul Tbk,Consumer,Pharmaceuticals,,,TRUE,TRUE
+KAEF,Kimia Farma Tbk,Consumer,Pharmaceuticals,,,FALSE,TRUE
+GGRM,Gudang Garam Tbk,Consumer,Tobacco,,,TRUE,TRUE
+HMSP,HM Sampoerna Tbk,Consumer,Tobacco,,,TRUE,TRUE
+WIIM,Wismilak Inti Makmur Tbk,Consumer,Tobacco,,,FALSE,TRUE
+ULTJ,Ultra Jaya Milk Industry Tbk,Consumer,Food & Beverage,,,TRUE,TRUE
+CPIN,Charoen Pokphand Indonesia Tbk,Consumer,Poultry,,,TRUE,TRUE
+JPFA,Japfa Comfeed Indonesia Tbk,Consumer,Poultry,,,TRUE,TRUE
+MAIN,Malindo Feedmill Tbk,Consumer,Poultry,,,FALSE,TRUE
+ADES,Akasha Wira International Tbk,Consumer,Food & Beverage,,,FALSE,TRUE
+DLTA,Delta Djakarta Tbk,Consumer,Food & Beverage,,,FALSE,TRUE
+TLKM,Telkom Indonesia Tbk,Infrastructure,Telecommunication,,,TRUE,TRUE
+EXCL,XL Axiata Tbk,Infrastructure,Telecommunication,,,TRUE,TRUE
+ISAT,Indosat Tbk,Infrastructure,Telecommunication,,,TRUE,TRUE
+TBIG,Tower Bersama Infrastructure Tbk,Infrastructure,Tower,,,FALSE,TRUE
+TOWR,Sarana Menara Nusantara Tbk,Infrastructure,Tower,,,TRUE,TRUE
+JSMR,Jasa Marga Tbk,Infrastructure,Toll Road,,,TRUE,TRUE
+WIKA,Wijaya Karya Tbk,Infrastructure,Construction,,,FALSE,TRUE
+WSKT,Waskita Karya Tbk,Infrastructure,Construction,,,FALSE,TRUE
+PTPP,PP Tbk,Infrastructure,Construction,,,FALSE,TRUE
+ADHI,Adhi Karya Tbk,Infrastructure,Construction,,,FALSE,TRUE
+ADRO,Adaro Energy Indonesia Tbk,Mining,Coal,,,TRUE,TRUE
+PTBA,Bukit Asam Tbk,Mining,Coal,,,TRUE,TRUE
+ITMG,Indo Tambangraya Megah Tbk,Mining,Coal,,,TRUE,TRUE
+HRUM,Harum Energy Tbk,Mining,Coal,,,TRUE,TRUE
+BYAN,Bayan Resources Tbk,Mining,Coal,,,FALSE,TRUE
+KKGI,Resource Alam Indonesia Tbk,Mining,Coal,,,FALSE,TRUE
+ANTM,Aneka Tambang Tbk,Mining,Metal Mining,,,TRUE,TRUE
+INCO,Vale Indonesia Tbk,Mining,Nickel,,,TRUE,TRUE
+MDKA,Merdeka Copper Gold Tbk,Mining,Gold & Copper,,,TRUE,TRUE
+HRTA,Hartadinata Abadi Tbk,Mining,Gold,,,FALSE,TRUE
+PGAS,Perusahaan Gas Negara Tbk,Energy,Gas Distribution,,,TRUE,TRUE
+AKRA,AKR Corporindo Tbk,Energy,Fuel Distribution,,,TRUE,TRUE
+MEDC,Medco Energi Internasional Tbk,Energy,Oil & Gas,,,TRUE,TRUE
+ELSA,Elnusa Tbk,Energy,Oil Services,,,FALSE,TRUE
+BSDE,Bumi Serpong Damai Tbk,Property,Real Estate,,,TRUE,TRUE
+SMRA,Summarecon Agung Tbk,Property,Real Estate,,,TRUE,TRUE
+CTRA,Ciputra Development Tbk,Property,Real Estate,,,TRUE,TRUE
+PWON,Pakuwon Jati Tbk,Property,Real Estate,,,TRUE,TRUE
+LPKR,Lippo Karawaci Tbk,Property,Real Estate,,,FALSE,TRUE
+DILD,Intiland Development Tbk,Property,Real Estate,,,FALSE,TRUE
+APLN,Agung Podomoro Land Tbk,Property,Real Estate,,,FALSE,TRUE
+MTLA,Metropolitan Land Tbk,Property,Real Estate,,,FALSE,TRUE
+ASII,Astra International Tbk,Industrial,Conglomerate,,,TRUE,TRUE
+UNTR,United Tractors Tbk,Industrial,Heavy Equipment,,,TRUE,TRUE
+HEXA,Hexindo Adiperkasa Tbk,Industrial,Heavy Equipment,,,FALSE,TRUE
+AUTO,Astra Otoparts Tbk,Industrial,Auto Parts,,,TRUE,TRUE
+SMSM,Selamat Sempurna Tbk,Industrial,Auto Parts,,,FALSE,TRUE
+INTP,Indocement Tunggal Prakarsa Tbk,Industrial,Cement,,,TRUE,TRUE
+SMGR,Semen Indonesia Tbk,Industrial,Cement,,,TRUE,TRUE
+WTON,Wijaya Karya Beton Tbk,Industrial,Cement,,,FALSE,TRUE
+AMFG,Asahimas Flat Glass Tbk,Industrial,Glass,,,FALSE,TRUE
+TKIM,Pabrik Kertas Tjiwi Kimia Tbk,Industrial,Paper,,,FALSE,TRUE
+INKP,Indah Kiat Pulp Paper Tbk,Industrial,Paper,,,TRUE,TRUE
+FASW,Fajar Surya Wisesa Tbk,Industrial,Paper,,,FALSE,TRUE
+ISSP,Steel Pipe Industry of Indonesia Tbk,Industrial,Steel,,,FALSE,TRUE
+BAJA,Saranacentral Bajatama Tbk,Industrial,Steel,,,FALSE,TRUE
+KRAS,Krakatau Steel Tbk,Industrial,Steel,,,FALSE,TRUE
+GOTO,GoTo Gojek Tokopedia Tbk,Technology,Digital Platform,,,TRUE,TRUE
+BUKA,Bukalapak.com Tbk,Technology,E-Commerce,,,TRUE,TRUE
+EMTK,Elang Mahkota Teknologi Tbk,Technology,Media & Tech,,,TRUE,TRUE
+MTDL,Metrodata Electronics Tbk,Technology,IT Distribution,,,FALSE,TRUE
+MLPT,Multipolar Technology Tbk,Technology,IT Services,,,FALSE,TRUE
+AMRT,Sumber Alfaria Trijaya Tbk,Retail,Mini Market,,,FALSE,TRUE
+HERO,Hero Supermarket Tbk,Retail,Supermarket,,,FALSE,TRUE
+LPPF,Matahari Department Store Tbk,Retail,Department Store,,,FALSE,TRUE
+MAPI,Mitra Adiperkasa Tbk,Retail,Fashion Retail,,,TRUE,TRUE
+ACES,Ace Hardware Indonesia Tbk,Retail,Home Improvement,,,TRUE,TRUE
+DMAS,Puradelta Lestari Tbk,Retail,Industrial Estate,,,FALSE,TRUE
+MIKA,Mitra Keluarga Karyasehat Tbk,Healthcare,Hospital,,,FALSE,TRUE
+SILO,Siloam International Hospitals Tbk,Healthcare,Hospital,,,FALSE,TRUE
+HEAL,Medikaloka Hermina Tbk,Healthcare,Hospital,,,FALSE,TRUE
+PRDA,Prodia Widyahusada Tbk,Healthcare,Diagnostics,,,FALSE,TRUE
+DVLA,Darya Varia Laboratoria Tbk,Healthcare,Pharmaceuticals,,,FALSE,TRUE
+PYFA,Pyridam Farma Tbk,Healthcare,Pharmaceuticals,,,FALSE,TRUE
+SCMA,Surya Citra Media Tbk,Media,TV Broadcasting,,,FALSE,TRUE
+MNCN,Media Nusantara Citra Tbk,Media,TV Broadcasting,,,FALSE,TRUE
+FILM,MD Pictures Tbk,Media,Film,,,FALSE,TRUE
+BIRD,Blue Bird Tbk,Logistics,Transportation,,,FALSE,TRUE
+SAFE,Steady Safe Tbk,Logistics,Transportation,,,FALSE,TRUE
+SMDR,Samudera Indonesia Tbk,Logistics,Shipping,,,FALSE,TRUE
+TMAS,Pelayaran Tempuran Emas Tbk,Logistics,Shipping,,,FALSE,TRUE
+AALI,Astra Agro Lestari Tbk,Agriculture,Palm Oil,,,FALSE,TRUE
+AGII,Aneka Gas Industri Tbk,Industrial,Chemical,,,FALSE,TRUE
+AMMN,Amman Mineral Internasional Tbk,Mining,Copper & Gold,,,TRUE,TRUE
+ARNA,Arwana Citramulia Tbk,Industrial,Ceramics,,,FALSE,TRUE
+ASRI,Alam Sutera Realty Tbk,Property,Real Estate,,,FALSE,TRUE
+BBTN,Bank Tabungan Negara Tbk,Finance,Banking,,,TRUE,TRUE
+BJTM,Bank Pembangunan Daerah Jatim Tbk,Finance,Banking,,,FALSE,TRUE
+BKSL,Sentul City Tbk,Property,Real Estate,,,FALSE,TRUE
+BMTR,Global Mediacom Tbk,Media,Media Conglomerate,,,FALSE,TRUE
+BRPT,Barito Pacific Tbk,Industrial,Petrochemical,,,TRUE,TRUE
+DSNG,Dharma Satya Nusantara Tbk,Agriculture,Palm Oil,,,FALSE,TRUE
+DSSA,Dian Swastatika Sentosa Tbk,Energy,Coal & Power,,,FALSE,TRUE
+ERAA,Erajaya Swasembada Tbk,Retail,Electronics Retail,,,TRUE,TRUE
+ESSA,ESSA Industries Indonesia Tbk,Energy,Petrochemical,,,FALSE,TRUE
+FREN,Smartfren Telecom Tbk,Infrastructure,Telecommunication,,,FALSE,TRUE
+GIAA,Garuda Indonesia Tbk,Logistics,Aviation,,,FALSE,TRUE
+IISA,Asuransi Jiwa Syariah Jasa Mitra Tbk,Finance,Insurance,,,FALSE,TRUE
+KIJA,Kawasan Industri Jababeka Tbk,Property,Industrial Estate,,,FALSE,TRUE
+LINK,Link Net Tbk,Infrastructure,Internet Provider,,,FALSE,TRUE
+MAPA,Map Aktif Adiperkasa Tbk,Retail,Sports Retail,,,FALSE,TRUE
+MBMA,Merdeka Battery Materials Tbk,Mining,Battery Materials,,,FALSE,TRUE
+MPPA,Matahari Putra Prima Tbk,Retail,Hypermarket,,,FALSE,TRUE
+NCKL,Trimegah Bangun Persada Tbk,Mining,Nickel,,,FALSE,TRUE
+NICL,Amman Mineral Nusa Tenggara Tbk,Mining,Copper,,,FALSE,TRUE
+PGEO,Pertamina Geothermal Energy Tbk,Energy,Geothermal,,,FALSE,TRUE
+RAJA,Rukun Raharja Tbk,Energy,Gas Infrastructure,,,FALSE,TRUE
+SIMP,Salim Ivomas Pratama Tbk,Agriculture,Palm Oil,,,FALSE,TRUE
+SMIL,Sarana Mitra Luas Tbk,Infrastructure,Logistics,,,FALSE,TRUE
+SRTG,Saratoga Investama Sedaya Tbk,Finance,Investment,,,FALSE,TRUE
+TAPA,Anugerah Kagum Karya Utama Tbk,Property,Real Estate,,,FALSE,TRUE
+TPIA,Chandra Asri Pacific Tbk,Industrial,Petrochemical,,,TRUE,TRUE
+ABBA,Mahaka Media Tbk,Media,Media,,,FALSE,TRUE
+ABMM,ABM Investama Tbk,Energy,Coal & Services,,,FALSE,TRUE
+AGRO,Bank Raya Indonesia Tbk,Finance,Banking,,,FALSE,TRUE
+AHAP,Asuransi Harta Aman Pratama Tbk,Finance,Insurance,,,FALSE,TRUE
+AIMS,Akbar Indo Makmur Stimec Tbk,Retail,Trade,,,FALSE,TRUE
+ALTO,Tri Banyan Tirta Tbk,Consumer,Beverages,,,FALSE,TRUE
+ASSA,Adi Sarana Armada Tbk,Logistics,Fleet Rental,,,FALSE,TRUE
+ATIC,Anabatic Technologies Tbk,Technology,IT Services,,,FALSE,TRUE
+BALI,Bali Towerindo Sentra Tbk,Infrastructure,Tower,,,FALSE,TRUE
+BANK,Bank Aladin Syariah Tbk,Finance,Banking,,,FALSE,TRUE
+BCAP,MNC Kapital Indonesia Tbk,Finance,Investment,,,FALSE,TRUE
+BMAS,Bank Maspion Indonesia Tbk,Finance,Banking,,,FALSE,TRUE
+BOSS,Borneo Olah Sarana Sukses Tbk,Mining,Coal,,,FALSE,TRUE
+BPII,Batavia Prosperindo Internasional Tbk,Finance,Multifinance,,,FALSE,TRUE
+BSSR,Baramulti Suksessarana Tbk,Mining,Coal,,,FALSE,TRUE
+CARE,Metro Healthcare Indonesia Tbk,Healthcare,Hospital,,,FALSE,TRUE
+CASA,Capital Financial Indonesia Tbk,Finance,Investment,,,FALSE,TRUE
+CASH,Cashlez Worldwide Indonesia Tbk,Technology,Fintech,,,FALSE,TRUE
+CITY,Natura City Developments Tbk,Property,Real Estate,,,FALSE,TRUE
+CLPI,Colorpak Indonesia Tbk,Industrial,Packaging,,,FALSE,TRUE
+CMNP,Citra Marga Nushapala Persada Tbk,Infrastructure,Toll Road,,,FALSE,TRUE
+CSAP,Catur Sentosa Adiprana Tbk,Retail,Building Materials,,,FALSE,TRUE
+DEWA,Darma Henwa Tbk,Mining,Coal Services,,,FALSE,TRUE
+DGNS,Diagnos Laboratorium Utama Tbk,Healthcare,Diagnostics,,,FALSE,TRUE
+EKAD,Ekadharma International Tbk,Industrial,Adhesive,,,FALSE,TRUE
+EPMT,Enseval Putera Megatrading Tbk,Healthcare,Pharma Distribution,,,FALSE,TRUE
+FIRE,Alfa Energi Investama Tbk,Energy,Coal,,,FALSE,TRUE
+FLMC,Falmaco Nonwoven Industri Tbk,Industrial,Textile,,,FALSE,TRUE
+FOOD,Sentra Food Indonesia Tbk,Consumer,Food & Beverage,,,FALSE,TRUE
+FORZ,Forza Land Indonesia Tbk,Property,Real Estate,,,FALSE,TRUE
+GJTL,Gajah Tunggal Tbk,Industrial,Tires,,,FALSE,TRUE
+GMFI,Garuda Maintenance Facility Tbk,Logistics,Aviation Services,,,FALSE,TRUE
+HADE,Himalaya Energi Perkasa Tbk,Energy,Coal,,,FALSE,TRUE
+HDTX,Panasia Indo Resources Tbk,Industrial,Textile,,,FALSE,TRUE
+IATA,MNC Studios International Tbk,Media,Film & TV,,,FALSE,TRUE
+IBST,Inti Bangun Sejahtera Tbk,Infrastructure,Tower,,,FALSE,TRUE
+ICON,Island Concepts Indonesia Tbk,Tourism,Hotel,,,FALSE,TRUE
+IDXV,IDX Value 30,Index,Index,,,FALSE,FALSE
+INAI,Indal Aluminium Industry Tbk,Industrial,Aluminum,,,FALSE,TRUE
+INCI,Intanwijaya Internasional Tbk,Industrial,Chemical,,,FALSE,TRUE
+IPCC,Indonesia Kendaraan Terminal Tbk,Logistics,Port Services,,,FALSE,TRUE
+IPPE,Indo Pureco Pratama Tbk,Industrial,Recycling,,,FALSE,TRUE
+JAWA,Jaya Agra Wattie Tbk,Agriculture,Plantation,,,FALSE,TRUE
+JIHD,Jakarta International Hotels Tbk,Tourism,Hotel,,,FALSE,TRUE
+JKON,Jaya Konstruksi Manggala Pratama Tbk,Infrastructure,Construction,,,FALSE,TRUE
+KBLI,KMI Wire & Cable Tbk,Industrial,Cable,,,FALSE,TRUE
+KBLM,Kabelindo Murni Tbk,Industrial,Cable,,,FALSE,TRUE
+KDSI,Kedawung Setia Industrial Tbk,Industrial,Enamelware,,,FALSE,TRUE
+KEJU,Mulia Boga Raya Tbk,Consumer,Food & Beverage,,,FALSE,TRUE
+KIAS,Keramika Indonesia Assosiasi Tbk,Industrial,Ceramics,,,FALSE,TRUE
+LMAS,Limas Indonesia Makmur Tbk,Technology,IT Services,,,FALSE,TRUE
+LPLI,Star Pacific Tbk,Media,Media,,,FALSE,TRUE
+LSIP,PP London Sumatra Indonesia Tbk,Agriculture,Palm Oil,,,FALSE,TRUE
+LTLS,Lautan Luas Tbk,Industrial,Chemical Distribution,,,FALSE,TRUE
+MBSS,Mitrabahtera Segara Sejati Tbk,Logistics,Coal Shipping,,,FALSE,TRUE
+MCAS,M Cash Integrasi Tbk,Technology,Fintech,,,FALSE,TRUE
+MIDI,Midi Utama Indonesia Tbk,Retail,Mini Market,,,FALSE,TRUE
+MKNT,Mitra Komunikasi Nusantara Tbk,Technology,Telecom Distribution,,,FALSE,TRUE
+MOLI,Madusari Murni Indah Tbk,Consumer,Food & Beverage,,,FALSE,TRUE
+MPXL,MPX Logistics International Tbk,Logistics,Freight,,,FALSE,TRUE
+MRAT,Mustika Ratu Tbk,Consumer,Cosmetics,,,FALSE,TRUE
+MSIN,MNC Studios International Tbk,Media,Film,,,FALSE,TRUE
+NELY,Pelayaran Nelly Dwi Putri Tbk,Logistics,Shipping,,,FALSE,TRUE
+NFCX,NFC Indonesia Tbk,Technology,Fintech,,,FALSE,TRUE
+NICE,Inter Delta Tbk,Industrial,Battery,,,FALSE,TRUE
+NRCA,Nusa Raya Cipta Tbk,Infrastructure,Construction,,,FALSE,TRUE
+OBMD,OBM Drilchem Tbk,Energy,Oil Services,,,FALSE,TRUE
+OKAS,Ancora Indonesia Resources Tbk,Energy,Oil & Gas,,,FALSE,TRUE
+OVOD,Organon Indonesia Tbk,Healthcare,Pharmaceuticals,,,FALSE,TRUE
+PALM,Provident Agro Tbk,Agriculture,Palm Oil,,,FALSE,TRUE
+PBID,Panca Budi Idaman Tbk,Industrial,Packaging,,,FALSE,TRUE
+PCAR,Prima Cakrawala Abadi Tbk,Consumer,Food & Beverage,,,FALSE,TRUE
+PDPP,Perkerbunan Nusantara IV Tbk,Agriculture,Plantation,,,FALSE,TRUE
+PICO,Pelangi Indah Canindo Tbk,Industrial,Metal Packaging,,,FALSE,TRUE
+PJAA,Pembangunan Jaya Ancol Tbk,Tourism,Recreation,,,FALSE,TRUE
+PKPK,Perdana Karya Perkasa Tbk,Mining,Coal Services,,,FALSE,TRUE
+PNGO,Pinago Utama Tbk,Agriculture,Palm Oil,,,FALSE,TRUE
+PORT,Indonesia Transport & Infrastructure,Logistics,Port,,,FALSE,TRUE
+PPRE,PP Presisi Tbk,Infrastructure,Construction,,,FALSE,TRUE
+PRTL,Pratama Abadi Nusa Industri Tbk,Industrial,Packaging,,,FALSE,TRUE
+PTIS,Indo Straits Tbk,Logistics,Shipping,,,FALSE,TRUE
+RANC,Supra Boga Lestari Tbk,Retail,Supermarket,,,FALSE,TRUE
+RELF,Graha Layar Prima Tbk,Media,Cinema,,,FALSE,TRUE
+ROTI,Nippon Indosari Corpindo Tbk,Consumer,Food & Beverage,,,FALSE,TRUE
+SAME,Sarana Meditama Metropolitan Tbk,Healthcare,Hospital,,,FALSE,TRUE
+SAMF,Saraswanti Anugerah Makmur Tbk,Agriculture,Fertilizer,,,FALSE,TRUE
+SAPX,Satria Antaran Prima Tbk,Logistics,Courier,,,FALSE,TRUE
+SHIP,Sillo Maritime Perdana Tbk,Logistics,Shipping,,,FALSE,TRUE
+SKBM,Sekar Bumi Tbk,Consumer,Food & Beverage,,,FALSE,TRUE
+SKLT,Sekar Laut Tbk,Consumer,Food & Beverage,,,FALSE,TRUE
+SLIS,Gaya Abadi Sempurna Tbk,Technology,EV & IoT,,,FALSE,TRUE
+SMKL,Satyamitra Usman Tbk,Industrial,Packaging,,,FALSE,TRUE
+SOFA,Boston Furniture Industries Tbk,Industrial,Furniture,,,FALSE,TRUE
+SOHO,Soho Global Health Tbk,Healthcare,Pharmaceuticals,,,FALSE,TRUE
+SONA,Sona Topas Tourism Industry Tbk,Tourism,Travel,,,FALSE,TRUE
+SPMA,Suparma Tbk,Industrial,Paper,,,FALSE,TRUE
+SRAJ,Sejahteraraya Anugrahjaya Tbk,Healthcare,Hospital,,,FALSE,TRUE
+SRIL,Sri Rejeki Isman Tbk,Industrial,Textile,,,FALSE,TRUE
+SRSN,Indo Acidatama Tbk,Industrial,Chemical,,,FALSE,TRUE
+SSIA,Surya Semesta Internusa Tbk,Property,Industrial Estate,,,FALSE,TRUE
+SSMS,Sawit Sumbermas Sarana Tbk,Agriculture,Palm Oil,,,TRUE,TRUE
+TALF,Tunas Alfin Tbk,Industrial,Packaging,,,FALSE,TRUE
+TAPG,Triputra Agro Persada Tbk,Agriculture,Palm Oil,,,FALSE,TRUE
+TELE,Tiphone Mobile Indonesia Tbk,Retail,Telecom Distribution,,,FALSE,TRUE
+TFAS,Telefast Indonesia Tbk,Technology,IT Services,,,FALSE,TRUE
+TGRA,Terregra Asia Energy Tbk,Energy,Renewable Energy,,,FALSE,TRUE
+TINS,Timah Tbk,Mining,Tin,,,FALSE,TRUE
+TMPO,Tempo Inti Media Tbk,Media,Print Media,,,FALSE,TRUE
+TOPS,Totalindo Eka Persada Tbk,Infrastructure,Construction,,,FALSE,TRUE
+TPMA,Trans Power Marine Tbk,Logistics,Shipping,,,FALSE,TRUE
+TRST,Trias Sentosa Tbk,Industrial,Plastics,,,FALSE,TRUE
+TSPC,Tempo Scan Pacific Tbk,Healthcare,Pharmaceuticals,,,FALSE,TRUE
+TUGU,Asuransi Tugu Pratama Indonesia Tbk,Finance,Insurance,,,FALSE,TRUE
+UANG,Sentral Mitra Informatika Tbk,Technology,IT Services,,,FALSE,TRUE
+UCID,Uni-Charm Indonesia Tbk,Consumer,Personal Care,,,FALSE,TRUE
+UNIT,Nusantara Inti Corpora Tbk,Industrial,Textile,,,FALSE,TRUE
+UNSP,Bakrie Sumatera Plantations Tbk,Agriculture,Plantation,,,FALSE,TRUE
+VICI,Victoria Investama Tbk,Finance,Securities,,,FALSE,TRUE
+VIVA,Visi Media Asia Tbk,Media,TV Broadcasting,,,FALSE,TRUE
+WKST,Wika Realty Tbk,Property,Real Estate,,,FALSE,TRUE
+WOOD,Integra Indocabinet Tbk,Industrial,Furniture,,,FALSE,TRUE
+WSBP,Waskita Beton Precast Tbk,Industrial,Cement,,,FALSE,TRUE
+YPAS,Yanaprima Hastapersada Tbk,Industrial,Plastics,,,FALSE,TRUE
+YULE,Yulie Sekuritas Indonesia Tbk,Finance,Securities,,,FALSE,TRUE
+MDIY,PT Map Boga Adiperkasa Tbk,Consumer,Food,,,FALSE,TRUE
+BCIC,Bank JTrust Indonesia Tbk,Finance,Banking,,,FALSE,TRUE
+BDMN,Bank Danamon Indonesia Tbk,Finance,Banking,,,FALSE,TRUE
+BEEF,Estika Tata Tiara Tbk,Consumer,Food,,,FALSE,TRUE
+BELL,Trisula Textile Industries Tbk,Basic Industry,Textile,,,FALSE,TRUE
+BGTG,Bank Ganesha Tbk,Finance,Banking,,,FALSE,TRUE
+BHAT,Bhakti Multi Artha Tbk,Finance,Multifinance,,,FALSE,TRUE
+BHIT,MNC Investama Tbk,Finance,Investment,,,FALSE,TRUE
+BIPI,Astrindo Nusantara Infrastruktur Tbk,Infrastructure,Energy,,,FALSE,TRUE
+BIPP,Bhuwantala Indah Permai Tbk,Property,Real Estate,,,FALSE,TRUE
+BKSW,Bank QNB Indonesia Tbk,Finance,Banking,,,FALSE,TRUE
+BLTM,Batulicin Nusantara Maritim Tbk,Infrastructure,Shipping,,,FALSE,TRUE
+BMHS,Bundamedik Tbk,Consumer,Hospital,,,FALSE,TRUE
+BPFI,Batavia Prosperindo Finance Tbk,Finance,Multifinance,,,FALSE,TRUE
+BSML,Bumi Suksesindo Makmur Lestari Tbk,Mining,Metal Mining,,,FALSE,TRUE
+CBMF,Cahaya Bintang Medan Tbk,Consumer,Food,,,FALSE,TRUE
+CEKA,Wilmar Cahaya Indonesia Tbk,Consumer,Food,,,FALSE,TRUE
+CFIN,Clipan Finance Indonesia Tbk,Finance,Multifinance,,,FALSE,TRUE
+CMNT,Cemindo Gemilang Tbk,Basic Industry,Cement,,,FALSE,TRUE
+CMPP,AirAsia Indonesia Tbk,Infrastructure,Aviation,,,FALSE,TRUE
+CMRY,Cisarua Mountain Dairy Tbk,Consumer,Food,,,FALSE,TRUE
+COAL,Black Diamond Resources Tbk,Mining,Coal,,,FALSE,TRUE
+COCO,Wahana Interfood Nusantara Tbk,Consumer,Food,,,FALSE,TRUE
+COSM,Akasha Wira International Tbk,Consumer,Cosmetics,,,FALSE,TRUE
+CPRO,Central Proteina Prima Tbk,Agriculture,Fishery,,,FALSE,TRUE
+CUAN,Petrindo Jaya Kreasi Tbk,Mining,Coal,,,FALSE,TRUE
+DFAM,Dafam Property Indonesia Tbk,Property,Hotel,,,FALSE,TRUE
+DIGI,Arkadia Digital Media Tbk,Technology,Media,,,FALSE,TRUE
+DKFT,Central Omega Resources Tbk,Mining,Metal Mining,,,FALSE,TRUE
+DNET,Indoritel Makmur Internasional Tbk,Trade,Distribution,,,FALSE,TRUE
+DOOH,Era Digital Media Tbk,Technology,Media,,,FALSE,TRUE
+DPUM,Dua Putra Utama Makmur Tbk,Consumer,Food,,,FALSE,TRUE
+DRMA,Dharma Polimetal Tbk,Misc Industry,Automotive Parts,,,FALSE,TRUE
+DUTI,Duta Pertiwi Tbk,Property,Real Estate,,,FALSE,TRUE
+EAST,Eastparc Hotel Tbk,Trade,Hotel,,,FALSE,TRUE
+ECII,Electronic City Indonesia Tbk,Trade,Retail,,,FALSE,TRUE
+ENRG,Energi Mega Persada Tbk,Mining,Oil Gas,,,FALSE,TRUE
+EURO,Inovisi Infracom Tbk,Technology,IT,,,FALSE,TRUE
+FAPA,FAP Agri Tbk,Agriculture,Plantation,,,FALSE,TRUE
+GAMA,Aksara Global Development Tbk,Property,Real Estate,,,FALSE,TRUE
+GGRP,Gunung Raja Paksi Tbk,Basic Industry,Metal,,,FALSE,TRUE
+GKPI,Gihon Telekomunikasi Indonesia Tbk,Infrastructure,Tower,,,FALSE,TRUE
+GLOB,Globe Kita Terang Tbk,Technology,Tech,,,FALSE,TRUE
+HDFA,Radana Bhaskara Finance Tbk,Finance,Multifinance,,,FALSE,TRUE
+HKMU,HK Metals Utama Tbk,Basic Industry,Metal,,,FALSE,TRUE
+HOKI,Buyung Poetra Sembada Tbk,Consumer,Food,,,FALSE,TRUE
+HOME,Plaza Indonesia Realty Tbk,Property,Real Estate,,,FALSE,TRUE
+HOTL,Sapta Sarana Sejahtera Tbk,Trade,Hotel,,,FALSE,TRUE
+HRME,Menteng Heritage Realty Tbk,Trade,Hotel,,,FALSE,TRUE
+IIKP,Inti Agri Resources Tbk,Agriculture,Fishery,,,FALSE,TRUE
+IMJS,Indomobil Multi Jasa Tbk,Finance,Multifinance,,,FALSE,TRUE
+IMPC,Impack Pratama Industri Tbk,Basic Industry,Plastics,,,FALSE,TRUE
+INAF,Indofarma Tbk,Consumer,Pharma,,,FALSE,TRUE
+INDX,Tanah Laut Tbk,Basic Industry,Wood,,,FALSE,TRUE
+INDY,Indika Energy Tbk,Mining,Coal,,,FALSE,TRUE
+INPC,Bank Artha Graha Internasional Tbk,Finance,Banking,,,FALSE,TRUE
+INTD,Inter Delta Tbk,Trade,Distribution,,,FALSE,TRUE
+IPOL,Indopoly Swakarsa Industry Tbk,Basic Industry,Plastics,,,FALSE,TRUE
+ISEA,Maharaksa Biru Energi Tbk,Infrastructure,Energy,,,FALSE,TRUE
+ITIC,Indonesian Tobacco Tbk,Consumer,Tobacco,,,FALSE,TRUE
+JARR,Jhonlin Agro Raya Tbk,Agriculture,Plantation,,,FALSE,TRUE
+JAYA,Surya Semesta Internusa Tbk,Property,Construction,,,FALSE,TRUE
+JECC,Jembo Cable Company Tbk,Basic Industry,Cable,,,FALSE,TRUE
+JGLE,Graha Andrasentra Propertindo Tbk,Property,Real Estate,,,FALSE,TRUE
+JMAS,Asuransi Jiwa Syariah Jasa Mitra Tbk,Finance,Insurance,,,FALSE,TRUE
+KBAG,Karya Bersama Anugerah Tbk,Property,Real Estate,,,FALSE,TRUE
+KBLV,First Media Tbk,Infrastructure,Internet,,,FALSE,TRUE
+KCINC,Kinco Corporation Tbk,Basic Industry,Metal,,,FALSE,TRUE
+KOPI,Koperindo Mitra Usaha Tbk,Finance,Investment,,,FALSE,TRUE
+KPAL,Steadfast Marine Tbk,Infrastructure,Shipping,,,FALSE,TRUE
+KRYA,Bangun Karya Perkasa Jaya Tbk,Property,Construction,,,FALSE,TRUE
+KUIN,Kustodian Sentral Efek Indonesia Tbk,Finance,Investment,,,FALSE,TRUE
+LAND,Trimitra Propertindo Tbk,Property,Real Estate,,,FALSE,TRUE
+LCKM,LCK Global Kedaton Tbk,Trade,Retail,,,FALSE,TRUE
+LCPP,Lotte Chemical Titan Tbk,Basic Industry,Chemicals,,,FALSE,TRUE
+LEAD,Logindo Samudramakmur Tbk,Infrastructure,Shipping,,,FALSE,TRUE
+LION,Lion Metal Works Tbk,Basic Industry,Metal,,,FALSE,TRUE
+LMPI,Langgeng Makmur Industri Tbk,Misc Industry,Household,,,FALSE,TRUE
+LMSH,Lionmesh Prima Tbk,Basic Industry,Metal,,,FALSE,TRUE
+LPCK,Lippo Cikarang Tbk,Property,Industrial Estate,,,FALSE,TRUE
+LPIN,Multi Prima Sejahtera Tbk,Misc Industry,Automotive Parts,,,FALSE,TRUE
+LUCK,Sentral Mitra Informatika Tbk,Technology,IT,,,FALSE,TRUE
+MABA,Marga Abhinaya Abadi Tbk,Property,Real Estate,,,FALSE,TRUE
+MAMI,Mas Murni Indonesia Tbk,Trade,Hotel,,,FALSE,TRUE
+MANK,Mandiri Herindo Adiperkasa Tbk,Infrastructure,Logistics,,,FALSE,TRUE
+MARE,Mahaka Radio Integra Tbk,Trade,Media,,,FALSE,TRUE
+MARK,Mark Dynamics Indonesia Tbk,Basic Industry,Rubber,,,FALSE,TRUE
+MASB,Maskapai Reasuransi Indonesia Tbk,Finance,Insurance,,,FALSE,TRUE
+MDIA,Intermedia Capital Tbk,Trade,Media,,,FALSE,TRUE
+MFMI,Multifiling Mitra Indonesia Tbk,Trade,Services,,,FALSE,TRUE
+MGRO,Mahkota Group Tbk,Agriculture,Plantation,,,FALSE,TRUE
+MICE,Multi Indocitra Tbk,Trade,Distribution,,,FALSE,TRUE
+MITI,Mitra Investindo Tbk,Mining,Metal Mining,,,FALSE,TRUE
+MKPI,Metropolitan Kentjana Tbk,Property,Real Estate,,,FALSE,TRUE
+MLBI,Multi Bintang Indonesia Tbk,Consumer,Beverage,,,FALSE,TRUE
+MLIA,Mulia Industrindo Tbk,Basic Industry,Glass,,,FALSE,TRUE
+MSKY,MNC Sky Vision Tbk,Trade,Media,,,FALSE,TRUE
+MTEL,Dayamitra Telekomunikasi Tbk,Infrastructure,Tower,,,TRUE,TRUE
+MYOH,Samindo Resources Tbk,Mining,Coal,,,FALSE,TRUE
+NIRO,Nirvana Development Tbk,Property,Real Estate,,,FALSE,TRUE
+OCAP,Onix Capital Tbk,Finance,Investment,,,FALSE,TRUE
+OILS,Indo Oil Perkasa Tbk,Mining,Oil Gas,,,FALSE,TRUE
+OPMS,Optima Prima Metal Sinergi Tbk,Basic Industry,Metal,,,FALSE,TRUE
+PADI,Minna Padi Investama Sekuritas Tbk,Finance,Securities,,,FALSE,TRUE
+PANR,Panorama Sentrawisata Tbk,Trade,Tourism,,,FALSE,TRUE
+PBSA,Paramita Bangun Sarana Tbk,Property,Construction,,,FALSE,TRUE
+PDES,Destinasi Tirta Nusantara Tbk,Trade,Tourism,,,FALSE,TRUE
+PEGE,Panca Global Securities Tbk,Finance,Securities,,,FALSE,TRUE
+PGLI,Pembangunan Graha Lestari Indah Tbk,Property,Real Estate,,,FALSE,TRUE
+PLAN,Planet Properti Tbk,Property,Real Estate,,,FALSE,TRUE
+PNIN,Paninvest Tbk,Finance,Investment,,,FALSE,TRUE
+PNLF,Panin Financial Tbk,Finance,Insurance,,,FALSE,TRUE
+POLA,Pool Advista Finance Tbk,Finance,Multifinance,,,FALSE,TRUE
+POLY,Asia Pacific Fibers Tbk,Basic Industry,Textile,,,FALSE,TRUE
+POOL,Pool Advista Indonesia Tbk,Finance,Investment,,,FALSE,TRUE
+PPGL,Pembangunan Perumahan Gelar Tbk,Property,Construction,,,FALSE,TRUE
+PRAS,Prima Alloy Steel Universal Tbk,Basic Industry,Metal,,,FALSE,TRUE
+PRIM,Royal Prima Tbk,Consumer,Hospital,,,FALSE,TRUE
+PSAB,J Resources Asia Pasifik Tbk,Mining,Metal Mining,,,FALSE,TRUE
+PSKT,Red Planet Hotels Tbk,Trade,Hotel,,,FALSE,TRUE
+PTDU,Djasa Ubersakti Tbk,Property,Construction,,,FALSE,TRUE
+PTRO,Petrosea Tbk,Mining,Mining Services,,,FALSE,TRUE
+PTSP,Pioneerindo Gourmet International Tbk,Consumer,Food,,,FALSE,TRUE
+PUDP,Pudjiadi Prestige Tbk,Property,Real Estate,,,FALSE,TRUE
+PURE,Trinitan Metals and Minerals Tbk,Mining,Metal Mining,,,FALSE,TRUE
+PZZA,Sarimelati Kencana Tbk,Consumer,Food,,,FALSE,TRUE
+RALS,Ramayana Lestari Sentosa Tbk,Trade,Retail,,,FALSE,TRUE
+RBMS,Ristia Bintang Mahkotasejati Tbk,Trade,Media,,,FALSE,TRUE
+RCCC,Ratu Prabu Energi Tbk,Mining,Oil Gas,,,FALSE,TRUE
+RDTX,Roda Vivatex Tbk,Basic Industry,Textile,,,FALSE,TRUE
+RELI,Reliance Sekuritas Indonesia Tbk,Finance,Securities,,,FALSE,TRUE
+RICY,Ricky Putra Globalindo Tbk,Basic Industry,Textile,,,FALSE,TRUE
+RISE,Jaya Sukses Makmur Sentosa Tbk,Property,Real Estate,,,FALSE,TRUE
+RMBA,Bentoel Internasional Investama Tbk,Consumer,Tobacco,,,FALSE,TRUE
+RUIS,Radiant Utama Interinsco Tbk,Mining,Oil Services,,,FALSE,TRUE
+SAGF,Sarana Agro Nusa Persada Tbk,Agriculture,Plantation,,,FALSE,TRUE
+SCCO,Supreme Cable Manufacturing Tbk,Basic Industry,Cable,,,FALSE,TRUE
+SDMU,Sidomulyo Selaras Tbk,Infrastructure,Logistics,,,FALSE,TRUE
+SDPC,Millennium Pharmacon International Tbk,Trade,Distribution,,,FALSE,TRUE
+SGRO,Sampoerna Agro Tbk,Agriculture,Plantation,,,FALSE,TRUE
+SINI,Singaraja Putra Tbk,Trade,Distribution,,,FALSE,TRUE
+SIRMA,Siwani Makmur Tbk,Basic Industry,Packaging,,,FALSE,TRUE
+SKRN,Superkrane Mitra Utama Tbk,Infrastructure,Rental,,,FALSE,TRUE
+SMBR,Semen Baturaja Tbk,Basic Industry,Cement,,,FALSE,TRUE
+SMDM,Suryamas Dutamakmur Tbk,Property,Real Estate,,,FALSE,TRUE
+SMMT,Golden Eagle Energy Tbk,Mining,Coal,,,FALSE,TRUE
+SOCI,Soechi Lines Tbk,Infrastructure,Shipping,,,FALSE,TRUE
+SOTS,Satria Mega Kencana Tbk,Property,Real Estate,,,FALSE,TRUE
+STTP,Siantar Top Tbk,Consumer,Food,,,FALSE,TRUE
+SUPR,Solusi Tunas Pratama Tbk,Infrastructure,Tower,,,FALSE,TRUE
+TARA,Sitara Propertindo Tbk,Property,Real Estate,,,FALSE,TRUE
+TAXI,Express Transindo Utama Tbk,Infrastructure,Transportation,,,FALSE,TRUE
+TOTL,Total Bangun Persada Tbk,Property,Construction,,,FALSE,TRUE
+TOTO,Surya Toto Indonesia Tbk,Basic Industry,Ceramics,,,FALSE,TRUE
+TRIM,Trimegah Sekuritas Indonesia Tbk,Finance,Securities,,,FALSE,TRUE
+TURI,Tunas Ridean Tbk,Trade,Automotive,,,FALSE,TRUE
+UPCL,Unicomm Persada Corporation Tbk,Technology,IT,,,FALSE,TRUE
+VICO,Victoria Investama Tbk,Finance,Investment,,,FALSE,TRUE
+VINS,Visual Telindo Tbk,Technology,IT,,,FALSE,TRUE
+VKTR,Volta Indonesia Semesta Tbk,Misc Industry,Electric Vehicle,,,FALSE,TRUE
+WAPO,Wahana Pronatural Tbk,Consumer,Food,,,FALSE,TRUE
+WEGE,Wijaya Karya Gedung Tbk,Property,Construction,,,FALSE,TRUE
+WEHA,WEHA Transportasi Indonesia Tbk,Infrastructure,Transportation,,,FALSE,TRUE
+WGSH,Wicaksana Overseas International Tbk,Trade,Distribution,,,FALSE,TRUE
+WINS,Wintermar Offshore Marine Tbk,Infrastructure,Shipping,,,FALSE,TRUE
+WMUU,Widodo Makmur Unggas Tbk,Agriculture,Poultry,,,FALSE,TRUE
+YELO,Yelooo Integra Datanet Tbk,Technology,IT,,,FALSE,TRUE
+ZBRA,Zebra Nusantara Tbk,Trade,Distribution,,,FALSE,TRUE
+FPNI,PT Lotte Chemical Titan Tbk,Basic Industry,,,,FALSE,TRUE
+ADMR,PT Alamtri Minerals Indonesia Tbk,Basic Industry,,,,FALSE,TRUE
+BUMI,PT Bumi Resources Tbk,Basic Industry,,,,FALSE,TRUE
