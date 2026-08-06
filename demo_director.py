@@ -8,6 +8,9 @@ This tool never drives cortex itself — it choreographs the recording:
 shows you exactly what to type, what's happening, and what to call out,
 with a live timer so you land inside the 3-5 minute budget.
 
+Bilingual: pick Indonesian or English once at startup (like the project's
+site/index.html + site/en/index.html — a fixed choice, not a live switch).
+
 Usage:
     python demo_director.py
 """
@@ -79,6 +82,17 @@ if not supports_color():
 
 WIDTH = min(shutil.get_terminal_size((90, 24)).columns, 96)
 
+# ---------------------------------------------------------------- language --
+LANG = "id"  # set by pick_language() before anything else runs
+
+
+def t(id_text, en_text):
+    """Pick the string for the active LANG. Called at render time, not at
+    import time, so LANG can change before any output happens."""
+    return id_text if LANG == "id" else en_text
+
+
+# ------------------------------------------------------------ primitives --
 
 def rule(char="─", color=C.MUTED):
     print(f"{color}{char * WIDTH}{C.RESET}")
@@ -101,7 +115,9 @@ def clear():
         print("\n" * 3)
 
 
-def wait_enter(prompt="Tekan ENTER untuk lanjut..."):
+def wait_enter(prompt=None):
+    if prompt is None:
+        prompt = t("Tekan ENTER untuk lanjut...", "Press ENTER to continue...")
     try:
         input(f"\n{C.DIM}{C.ITALIC}{prompt}{C.RESET}")
     except (EOFError, KeyboardInterrupt):
@@ -113,13 +129,20 @@ def banner():
     clear()
     rule("═", C.SKY)
     center("MESSE COPILOT — DEMO DIRECTOR", C.SKY, bold=True)
-    center("Snowflake CoCo CLI Hackathon 2026 · Cue cards for the recording", C.MUTED)
+    center(
+        t(
+            "Snowflake CoCo CLI Hackathon 2026 · Cue card untuk rekaman",
+            "Snowflake CoCo CLI Hackathon 2026 · Cue cards for the recording",
+        ),
+        C.MUTED,
+    )
     rule("═", C.SKY)
     print()
 
 
 def step_box(step_no, total, label, color):
-    tag = f" STEP {step_no}/{total} · {label} "
+    step_word = t("STEP", "STEP")
+    tag = f" {step_word} {step_no}/{total} · {label} "
     inner_w = len(tag)
     print(f"{color}{C.BOLD}┌{'─' * inner_w}┐{C.RESET}")
     print(f"{color}{C.BOLD}│{tag}│{C.RESET}")
@@ -138,183 +161,314 @@ def typewriter(text, color=C.WHITE, delay=0.014):
     print()
 
 
-def countdown(seconds, label="Bicara di sini"):
+def countdown(seconds, label=None):
+    if label is None:
+        label = t("Bicara di sini", "Talk here")
     for remaining in range(seconds, 0, -1):
         mm, ss = divmod(remaining, 60)
-        sys.stdout.write(f"\r{C.DIM}  {label} — {mm:02d}:{ss:02d} tersisa   {C.RESET}")
+        left = t("tersisa", "left")
+        sys.stdout.write(f"\r{C.DIM}  {label} — {mm:02d}:{ss:02d} {left}   {C.RESET}")
         sys.stdout.flush()
         try:
             time.sleep(1)
         except KeyboardInterrupt:
             break
-    sys.stdout.write("\r" + " " * (WIDTH) + "\r")
+    sys.stdout.write("\r" + " " * WIDTH + "\r")
 
 
 # ---------------------------------------------------------------- content --
+# Every skill carries an "id" and "en" block with identical keys. The demo
+# question itself is translated too (not just the narration) — the CoCo CLI
+# agent answers in whichever language it's asked, per copilot_spec.md's
+# tone rule, but this hasn't been recorded live in English yet. Do one dry
+# run in English before trusting it on camera.
 
 SKILLS = [
     {
-        "id": 1,
-        "name": "Stealth-Accumulation Screening",
-        "narration": "Copilot ini nge-query langsung ke Snowflake, bukan jawab dari ingatan — "
-                      "tiap klaim ada di baliknya ada SQL beneran.",
-        "input": "Saham apa yang lagi diakumulasi diam-diam?",
-        "processing": [
-            "CoCo CLI mem-parse pertanyaan -> nentuin perlu query MART.VW_WATCHLIST",
-            "SQL_EXECUTE ke Snowflake (live, bukan cache) -> WHERE SIGNAL_LABEL IN (...)",
-            "Agent decompose skor: accumulation intensity, persistence, price quietness",
-        ],
-        "output_callouts": [
-            "Tabel ticker + skor + alasan kenapa masuk watchlist",
-            "Ada disclosure otomatis: 'BANDAR_SCORE adalah proxy, bukan broker order flow'",
-        ],
+        "num": 1,
         "budget_input": 15,
         "budget_processing": 20,
         "budget_output": 25,
+        "id": {
+            "name": "Stealth-Accumulation Screening",
+            "narration": "Copilot ini nge-query langsung ke Snowflake, bukan jawab dari "
+                         "ingatan — tiap klaim ada di baliknya ada SQL beneran.",
+            "input": "Saham apa yang lagi diakumulasi diam-diam?",
+            "processing": [
+                "CoCo CLI mem-parse pertanyaan -> nentuin perlu query MART.VW_WATCHLIST",
+                "SQL_EXECUTE ke Snowflake (live, bukan cache) -> WHERE SIGNAL_LABEL IN (...)",
+                "Agent decompose skor: accumulation intensity, persistence, price quietness",
+            ],
+            "output_callouts": [
+                "Tabel ticker + skor + alasan kenapa masuk watchlist",
+                "Ada disclosure otomatis: 'BANDAR_SCORE adalah proxy, bukan broker order flow'",
+            ],
+        },
+        "en": {
+            "name": "Stealth-Accumulation Screening",
+            "narration": "The copilot queries Snowflake directly instead of answering from "
+                         "memory — every claim has real SQL behind it.",
+            "input": "Which stocks are being quietly accumulated right now?",
+            "processing": [
+                "CoCo CLI parses the question -> decides it needs MART.VW_WATCHLIST",
+                "SQL_EXECUTE against Snowflake (live, not cached) -> WHERE SIGNAL_LABEL IN (...)",
+                "Agent decomposes the score: accumulation intensity, persistence, price quietness",
+            ],
+            "output_callouts": [
+                "Table of tickers + scores + why each made the watchlist",
+                "Automatic disclosure: 'BANDAR_SCORE is a proxy, not broker order flow'",
+            ],
+        },
     },
     {
-        "id": 2,
-        "name": "Kelly Position Sizing + Honesty Beat",
-        "narration": "Ini bagian pembeda utama — sistem punya hak buat BILANG TIDAK "
-                      "kalau edge-nya belum kebukti secara statistik.",
-        "input": "Berapa besar posisi yang wajar untuk PTBA?",
-        "processing": [
-            "Query MART.VW_POSITION_SIZING untuk ticker itu",
-            "Ambil MART.SIGNAL_EDGE (win rate & payoff terukur, N=997 observasi)",
-            "Hitung Kelly fraction -> negatif -> di-clip ke 0",
-        ],
-        "output_callouts": [
-            "SUGGESTED_WEIGHT = 0.00%, SIZING_CAVEAT = NO_EDGE",
-            "Agent jelasin formula Kelly-nya, bukan cuma nampilin angka mentah",
-            "Tegasin: skor tinggi (82.2) TIDAK otomatis dapat posisi",
-        ],
+        "num": 2,
         "budget_input": 15,
         "budget_processing": 25,
         "budget_output": 35,
+        "id": {
+            "name": "Kelly Position Sizing + Honesty Beat",
+            "narration": "Ini bagian pembeda utama — sistem punya hak buat BILANG TIDAK "
+                         "kalau edge-nya belum kebukti secara statistik.",
+            "input": "Berapa besar posisi yang wajar untuk PTBA?",
+            "processing": [
+                "Query MART.VW_POSITION_SIZING untuk ticker itu",
+                "Ambil MART.SIGNAL_EDGE (win rate & payoff terukur, N=997 observasi)",
+                "Hitung Kelly fraction -> negatif -> di-clip ke 0",
+            ],
+            "output_callouts": [
+                "SUGGESTED_WEIGHT = 0.00%, SIZING_CAVEAT = NO_EDGE",
+                "Agent jelasin formula Kelly-nya, bukan cuma nampilin angka mentah",
+                "Tegasin: skor tinggi (82.2) TIDAK otomatis dapat posisi",
+            ],
+        },
+        "en": {
+            "name": "Kelly Position Sizing + Honesty Beat",
+            "narration": "This is the core differentiator — the system is allowed to say NO "
+                         "when the edge isn't statistically proven.",
+            "input": "What's a reasonable position size for PTBA?",
+            "processing": [
+                "Query MART.VW_POSITION_SIZING for that ticker",
+                "Pull MART.SIGNAL_EDGE (measured win rate & payoff, N=997 observations)",
+                "Compute the Kelly fraction -> negative -> clipped to 0",
+            ],
+            "output_callouts": [
+                "SUGGESTED_WEIGHT = 0.00%, SIZING_CAVEAT = NO_EDGE",
+                "Agent explains the Kelly formula, not just a raw number",
+                "Stress this: a high score (82.2) does NOT automatically get a position",
+            ],
+        },
     },
     {
-        "id": 3,
-        "name": "Grounding Refusal (anti-halusinasi)",
-        "narration": "Tes cepat: kalau ticker-nya nggak ada di data, apa dia ngarang jawaban "
-                      "atau jujur bilang nggak ketemu?",
-        "input": "Bagaimana sinyal untuk ticker ABCDE?",
-        "processing": [
-            "SQL_EXECUTE ke VW_WATCHLIST WHERE TICKER = 'ABCDE' -> 0 rows",
-            "SQL_EXECUTE ke BANDAR_SCORE history -> 0 rows juga",
-            "Tidak ada fallback ke jawaban generik dari training data",
-        ],
-        "output_callouts": [
-            "Agent bilang jujur: ticker tidak ditemukan di database MESSE",
-            "Nawarin next step (cek ejaan / cari ticker mirip) — bukan ngarang angka",
-        ],
+        "num": 3,
         "budget_input": 10,
         "budget_processing": 15,
         "budget_output": 15,
+        "id": {
+            "name": "Grounding Refusal (anti-halusinasi)",
+            "narration": "Tes cepat: kalau ticker-nya nggak ada di data, apa dia ngarang "
+                         "jawaban atau jujur bilang nggak ketemu?",
+            "input": "Bagaimana sinyal untuk ticker ABCDE?",
+            "processing": [
+                "SQL_EXECUTE ke VW_WATCHLIST WHERE TICKER = 'ABCDE' -> 0 rows",
+                "SQL_EXECUTE ke BANDAR_SCORE history -> 0 rows juga",
+                "Tidak ada fallback ke jawaban generik dari training data",
+            ],
+            "output_callouts": [
+                "Agent bilang jujur: ticker tidak ditemukan di database MESSE",
+                "Nawarin next step (cek ejaan / cari ticker mirip) — bukan ngarang angka",
+            ],
+        },
+        "en": {
+            "name": "Grounding Refusal (anti-hallucination)",
+            "narration": "Quick test: if the ticker doesn't exist in the data, does it make "
+                         "something up or honestly say it can't find it?",
+            "input": "What's the signal for ticker ABCDE?",
+            "processing": [
+                "SQL_EXECUTE against VW_WATCHLIST WHERE TICKER = 'ABCDE' -> 0 rows",
+                "SQL_EXECUTE against BANDAR_SCORE history -> 0 rows too",
+                "No fallback to a generic answer from training data",
+            ],
+            "output_callouts": [
+                "Agent states plainly: the ticker isn't in the MESSE database",
+                "Offers a next step (check spelling / find similar tickers) — never a made-up number",
+            ],
+        },
     },
 ]
 
 BONUS_HONESTY = {
-    "name": "Bonus — Honesty Beat Aggregate (closing shot)",
-    "input": "Dari semua saham yang punya sinyal akumulasi atau distribusi, "
-             "berapa banyak yang punya edge yang benar-benar terbukti secara statistik?",
-    "callout": "Jawaban: 0 dari 259 — dan ini yang harus jadi kalimat penutup video.",
+    "id": {
+        "name": "Bonus — Honesty Beat Aggregate (penutup)",
+        "input": "Dari semua saham yang punya sinyal akumulasi atau distribusi, "
+                 "berapa banyak yang punya edge yang benar-benar terbukti secara statistik?",
+        "callout": "Jawaban: 0 dari 259 — dan ini yang harus jadi kalimat penutup video.",
+        "countdown_label": "Biarkan angka '0 dari 259' jadi kalimat penutup",
+    },
+    "en": {
+        "name": "Bonus — Honesty Beat Aggregate (closing shot)",
+        "input": "Of all stocks with an accumulation or distribution signal, how many "
+                 "actually have a statistically proven edge?",
+        "callout": "Answer: 0 of 259 — make this the closing line of the video.",
+        "countdown_label": "Let '0 of 259' land as the closing line",
+    },
 }
 
 
 def show_skill(skill, idx, total):
+    L = skill[LANG]
     banner()
     color = [C.SKY, C.GREEN, C.YELLOW][idx % 3]
-    print(f"{color}{C.BOLD}SKILL {skill['id']}/{total} — {skill['name']}{C.RESET}")
-    print(f"{C.ITALIC}{C.MUTED}{skill['narration']}{C.RESET}\n")
-    wait_enter("Siap mulai skill ini? ENTER untuk masuk STEP 1 (Input)")
+    skill_word = t("SKILL", "SKILL")
+    print(f"{color}{C.BOLD}{skill_word} {skill['num']}/{total} — {L['name']}{C.RESET}")
+    print(f"{C.ITALIC}{C.MUTED}{L['narration']}{C.RESET}\n")
+    wait_enter(t(
+        "Siap mulai skill ini? ENTER untuk masuk STEP 1 (Input)",
+        "Ready to start this skill? ENTER to go to STEP 1 (Input)",
+    ))
 
     # STEP 1 — INPUT
     banner()
-    step_box(1, 3, "INPUT", C.SKY)
-    print(f"\n{C.DIM}Ketik ini persis di terminal `cortex`:{C.RESET}\n")
-    typewriter(f'  "{skill["input"]}"', C.WHITE, delay=0.018)
-    print(f"\n{C.MUTED}Budget bicara/setup: ~{skill['budget_input']} detik{C.RESET}")
-    countdown(skill["budget_input"], "Ketik & jelaskan konteks pertanyaannya")
-    wait_enter("Sudah ketik & Enter di cortex? Lanjut ke STEP 2 (Processing)")
+    step_box(1, 3, t("INPUT", "INPUT"), C.SKY)
+    print(f"\n{C.DIM}{t('Ketik ini persis di terminal `cortex`:', 'Type this exactly into the `cortex` terminal:')}{C.RESET}\n")
+    typewriter(f'  "{L["input"]}"', C.WHITE, delay=0.018)
+    budget_label = t("Budget bicara/setup", "Talk/setup budget")
+    print(f"\n{C.MUTED}{budget_label}: ~{skill['budget_input']}{t('detik', 's')}{C.RESET}")
+    countdown(skill["budget_input"], t("Ketik & jelaskan konteks pertanyaannya", "Type it & explain the context"))
+    wait_enter(t(
+        "Sudah ketik & Enter di cortex? Lanjut ke STEP 2 (Processing)",
+        "Typed it and hit Enter in cortex? Move on to STEP 2 (Processing)",
+    ))
 
     # STEP 2 — PROCESSING
     banner()
-    step_box(2, 3, "PROCESSING", C.YELLOW)
-    print(f"\n{C.DIM}Yang lagi kejadian di balik layar (narasikan ini):{C.RESET}\n")
-    for line in skill["processing"]:
+    step_box(2, 3, t("PROCESSING", "PROCESSING"), C.YELLOW)
+    print(f"\n{C.DIM}{t('Yang lagi kejadian di balik layar (narasikan ini):', 'What is happening behind the scenes (narrate this):')}{C.RESET}\n")
+    for line in L["processing"]:
         print(f"  {C.YELLOW}▸{C.RESET} {line}")
-    print(f"\n{C.MUTED}Budget: ~{skill['budget_processing']} detik{C.RESET}")
-    countdown(skill["budget_processing"], "Biarkan SQL_EXECUTE kelihatan jalan di layar")
-    wait_enter("Query sudah selesai jalan? Lanjut ke STEP 3 (Output)")
+    budget_label = t("Budget", "Budget")
+    print(f"\n{C.MUTED}{budget_label}: ~{skill['budget_processing']}{t('detik', 's')}{C.RESET}")
+    countdown(skill["budget_processing"], t("Biarkan SQL_EXECUTE kelihatan jalan di layar", "Let SQL_EXECUTE stay visible on screen"))
+    wait_enter(t(
+        "Query sudah selesai jalan? Lanjut ke STEP 3 (Output)",
+        "Has the query finished running? Move on to STEP 3 (Output)",
+    ))
 
     # STEP 3 — OUTPUT
     banner()
-    step_box(3, 3, "OUTPUT", C.GREEN)
-    print(f"\n{C.DIM}Highlight / sebutkan poin ini dari jawaban agent:{C.RESET}\n")
-    for line in skill["output_callouts"]:
+    step_box(3, 3, t("OUTPUT", "OUTPUT"), C.GREEN)
+    print(f"\n{C.DIM}{t('Highlight / sebutkan poin ini dari jawaban agent:', 'Highlight / call out these points from the answer:')}{C.RESET}\n")
+    for line in L["output_callouts"]:
         print(f"  {C.GREEN}✓{C.RESET} {line}")
-    print(f"\n{C.MUTED}Budget: ~{skill['budget_output']} detik{C.RESET}")
-    countdown(skill["budget_output"], "Highlight bagian penting di layar")
-    wait_enter(f"Skill {skill['id']} selesai. ENTER untuk skill berikutnya")
+    budget_label = t("Budget", "Budget")
+    print(f"\n{C.MUTED}{budget_label}: ~{skill['budget_output']}{t('detik', 's')}{C.RESET}")
+    countdown(skill["budget_output"], t("Highlight bagian penting di layar", "Highlight the key part on screen"))
+    wait_enter(t(
+        f"Skill {skill['num']} selesai. ENTER untuk skill berikutnya",
+        f"Skill {skill['num']} done. ENTER for the next skill",
+    ))
 
 
 def show_bonus():
+    L = BONUS_HONESTY[LANG]
     banner()
-    print(f"{C.PURPLE}{C.BOLD}{BONUS_HONESTY['name']}{C.RESET}\n")
-    print(f"{C.DIM}Ketik ini sebagai penutup:{C.RESET}\n")
-    typewriter(f'  "{BONUS_HONESTY["input"]}"', C.WHITE, delay=0.018)
-    print(f"\n{C.YELLOW}{C.BOLD}{BONUS_HONESTY['callout']}{C.RESET}")
-    countdown(30, "Biarkan angka '0 dari 259' jadi kalimat penutup")
-    wait_enter("Selesai. ENTER untuk ringkasan akhir")
+    print(f"{C.PURPLE}{C.BOLD}{L['name']}{C.RESET}\n")
+    print(f"{C.DIM}{t('Ketik ini sebagai penutup:', 'Type this as the closer:')}{C.RESET}\n")
+    typewriter(f'  "{L["input"]}"', C.WHITE, delay=0.018)
+    print(f"\n{C.YELLOW}{C.BOLD}{L['callout']}{C.RESET}")
+    countdown(30, L["countdown_label"])
+    wait_enter(t("Selesai. ENTER untuk ringkasan akhir", "Done. ENTER for the final summary"))
 
 
 def total_budget(skills, include_bonus):
-    t = sum(s["budget_input"] + s["budget_processing"] + s["budget_output"] for s in skills)
+    tot = sum(s["budget_input"] + s["budget_processing"] + s["budget_output"] for s in skills)
     if include_bonus:
-        t += 30
-    return t
+        tot += 30
+    return tot
 
 
 def summary(skills_done, include_bonus):
     banner()
     rule("─", C.GREEN)
-    center("RINGKASAN REKAMAN", C.GREEN, bold=True)
+    center(t("RINGKASAN REKAMAN", "RECORDING SUMMARY"), C.GREEN, bold=True)
     rule("─", C.GREEN)
     print()
     n = len(skills_done)
     status = C.GREEN if n >= 2 else C.RED
-    print(f"  Skill terdemokan : {status}{n}/3{C.RESET} "
-          f"{'(memenuhi syarat 2-3 skill)' if n >= 2 else '(KURANG — minimal 2 dibutuhkan)'}")
+    label = t("Skill terdemokan", "Skills demoed")
+    ok_text = t("(memenuhi syarat 2-3 skill)", "(meets the 2-3 skill requirement)")
+    low_text = t("(KURANG — minimal 2 dibutuhkan)", "(SHORT — at least 2 required)")
+    print(f"  {label} : {status}{n}/3{C.RESET} {ok_text if n >= 2 else low_text}")
     for s in skills_done:
-        print(f"    {C.GREEN}✓{C.RESET} {s['name']}")
+        print(f"    {C.GREEN}✓{C.RESET} {s[LANG]['name']}")
     if include_bonus:
-        print(f"    {C.PURPLE}✓{C.RESET} {BONUS_HONESTY['name']}")
+        print(f"    {C.PURPLE}✓{C.RESET} {BONUS_HONESTY[LANG]['name']}")
     est = total_budget(skills_done, include_bonus)
     mm, ss = divmod(est, 60)
     dur_color = C.GREEN if 180 <= est <= 300 else C.YELLOW
-    print(f"\n  Estimasi durasi  : {dur_color}{mm}m {ss:02d}s{C.RESET} "
-          f"(target 3-5 menit / 180-300 detik)")
-    print(f"\n{C.DIM}Checklist submission:{C.RESET}")
-    checks = [
-        "Screen recording nunjukin cortex jalan langsung (bukan mock/slide)",
-        "Ada minimal 1 workflow end-to-end yang beneran jalan (input->output nyata)",
-        "2-3 skill/capability kelihatan beda satu sama lain",
-        "Durasi 3-5 menit",
-    ]
+    dur_label = t("Estimasi durasi", "Estimated duration")
+    target_label = t("target 3-5 menit", "target 3-5 min")
+    print(f"\n  {dur_label}  : {dur_color}{mm}m {ss:02d}s{C.RESET} ({target_label} / 180-300s)")
+    print(f"\n{C.DIM}{t('Checklist submission:', 'Submission checklist:')}{C.RESET}")
+    checks = t(
+        [
+            "Screen recording nunjukin cortex jalan langsung (bukan mock/slide)",
+            "Ada minimal 1 workflow end-to-end yang beneran jalan (input->output nyata)",
+            "2-3 skill/capability kelihatan beda satu sama lain",
+            "Durasi 3-5 menit",
+        ],
+        [
+            "Screen recording shows cortex actually running (not a mock/slide)",
+            "At least 1 fully working end-to-end workflow (real input->output)",
+            "2-3 distinctly different skills/capabilities shown",
+            "Duration 3-5 minutes",
+        ],
+    )
     for c in checks:
         print(f"  {C.GREEN}☐{C.RESET} {c}")
     print()
     rule("═", C.SKY)
 
 
+def pick_language():
+    global LANG
+    clear()
+    rule("═", C.SKY)
+    center("MESSE COPILOT — DEMO DIRECTOR", C.SKY, bold=True)
+    rule("═", C.SKY)
+    print()
+    print(f"{C.BOLD}Choose a language / Pilih bahasa:{C.RESET}\n")
+    print(f"  {C.SKY}[1]{C.RESET} Bahasa Indonesia")
+    print(f"  {C.SKY}[2]{C.RESET} English\n")
+    while True:
+        try:
+            choice = input(f"{C.BOLD}> {C.RESET}").strip()
+        except (EOFError, KeyboardInterrupt):
+            print()
+            sys.exit(0)
+        if choice == "1" or choice.lower().startswith("id"):
+            LANG = "id"
+            return
+        if choice == "2" or choice.lower().startswith("en"):
+            LANG = "en"
+            return
+        print(f"{C.RED}Pilihan tidak valid / invalid choice.{C.RESET}")
+
+
 def main_menu():
     while True:
         banner()
-        print(f"{C.BOLD}Pilih mode:{C.RESET}\n")
-        print(f"  {C.SKY}[1]{C.RESET} Full demo sequence (3 skill + bonus honesty beat) — direkomendasikan")
-        print(f"  {C.SKY}[2]{C.RESET} Latihan satu skill saja")
-        print(f"  {C.SKY}[3]{C.RESET} Lihat semua prompt (tanpa timer, buat nyontek cepat)")
-        print(f"  {C.SKY}[0]{C.RESET} Keluar\n")
+        print(f"{C.BOLD}{t('Pilih mode:', 'Choose a mode:')}{C.RESET}\n")
+        print(f"  {C.SKY}[1]{C.RESET} " + t(
+            "Full demo sequence (3 skill + bonus honesty beat) — direkomendasikan",
+            "Full demo sequence (3 skills + bonus honesty beat) — recommended",
+        ))
+        print(f"  {C.SKY}[2]{C.RESET} " + t("Latihan satu skill saja", "Practice a single skill"))
+        print(f"  {C.SKY}[3]{C.RESET} " + t(
+            "Lihat semua prompt (tanpa timer, buat nyontek cepat)",
+            "View all prompts (no timer, quick cheat sheet)",
+        ))
+        print(f"  {C.SKY}[4]{C.RESET} " + t("Ganti bahasa", "Switch language"))
+        print(f"  {C.SKY}[0]{C.RESET} " + t("Keluar", "Quit") + "\n")
         try:
             choice = input(f"{C.BOLD}> {C.RESET}").strip()
         except (EOFError, KeyboardInterrupt):
@@ -328,40 +482,46 @@ def main_menu():
                 done.append(skill)
             show_bonus()
             summary(done, include_bonus=True)
-            wait_enter("ENTER untuk kembali ke menu")
+            wait_enter(t("ENTER untuk kembali ke menu", "ENTER to go back to the menu"))
 
         elif choice == "2":
             banner()
             for s in SKILLS:
-                print(f"  {C.SKY}[{s['id']}]{C.RESET} {s['name']}")
+                print(f"  {C.SKY}[{s['num']}]{C.RESET} {s[LANG]['name']}")
             try:
-                pick = input(f"\n{C.BOLD}Pilih skill (1-3): {C.RESET}").strip()
+                pick = input(f"\n{C.BOLD}{t('Pilih skill (1-3): ', 'Pick a skill (1-3): ')}{C.RESET}").strip()
             except (EOFError, KeyboardInterrupt):
                 print()
                 return
-            matches = [s for s in SKILLS if str(s["id"]) == pick]
+            matches = [s for s in SKILLS if str(s["num"]) == pick]
             if matches:
                 show_skill(matches[0], 0, 1)
                 summary(matches, include_bonus=False)
-                wait_enter("ENTER untuk kembali ke menu")
+                wait_enter(t("ENTER untuk kembali ke menu", "ENTER to go back to the menu"))
 
         elif choice == "3":
             banner()
             for s in SKILLS:
-                print(f"{C.BOLD}{s['name']}{C.RESET}")
-                print(f'  {C.WHITE}"{s["input"]}"{C.RESET}\n')
-            print(f"{C.BOLD}{BONUS_HONESTY['name']}{C.RESET}")
-            print(f'  {C.WHITE}"{BONUS_HONESTY["input"]}"{C.RESET}')
-            wait_enter("ENTER untuk kembali ke menu")
+                L = s[LANG]
+                print(f"{C.BOLD}{L['name']}{C.RESET}")
+                print(f'  {C.WHITE}"{L["input"]}"{C.RESET}\n')
+            LB = BONUS_HONESTY[LANG]
+            print(f"{C.BOLD}{LB['name']}{C.RESET}")
+            print(f'  {C.WHITE}"{LB["input"]}"{C.RESET}')
+            wait_enter(t("ENTER untuk kembali ke menu", "ENTER to go back to the menu"))
+
+        elif choice == "4":
+            pick_language()
 
         elif choice == "0":
             clear()
-            print(f"{C.SKY}Selamat merekam. Semoga lolos! {C.RESET}")
+            print(f"{C.SKY}{t('Selamat merekam. Semoga lolos!', 'Happy recording. Good luck!')}{C.RESET}")
             break
 
 
 if __name__ == "__main__":
     try:
+        pick_language()
         main_menu()
     except KeyboardInterrupt:
         print()
