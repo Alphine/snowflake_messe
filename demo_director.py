@@ -186,6 +186,7 @@ def countdown(seconds, label=None):
 SKILLS = [
     {
         "num": 1,
+        "core": True,
         "budget_input": 15,
         "budget_processing": 20,
         "budget_output": 25,
@@ -222,6 +223,7 @@ SKILLS = [
     },
     {
         "num": 2,
+        "core": True,
         "budget_input": 15,
         "budget_processing": 25,
         "budget_output": 35,
@@ -260,6 +262,7 @@ SKILLS = [
     },
     {
         "num": 3,
+        "core": True,
         "budget_input": 10,
         "budget_processing": 15,
         "budget_output": 15,
@@ -291,6 +294,43 @@ SKILLS = [
             "output_callouts": [
                 "Agent states plainly: the ticker isn't in the MESSE database",
                 "Offers a next step (check spelling / find similar tickers) — never a made-up number",
+            ],
+        },
+    },
+    {
+        "num": 4,
+        "core": False,
+        "budget_input": 10,
+        "budget_processing": 15,
+        "budget_output": 20,
+        "id": {
+            "name": "Distribution Warning Screening",
+            "narration": "Bukan cuma nyari yang naik — mesin sinyal yang sama juga bisa "
+                         "kasih peringatan dini buat saham yang lagi didistribusi.",
+            "input": "Saham apa yang sedang didistribusi sekarang?",
+            "processing": [
+                "Query MART.VW_WATCHLIST WHERE SIGNAL_LABEL = 'DISTRIBUTION'",
+                "Sort ascending by BANDAR_SCORE -> skor paling rendah = distribusi paling kuat",
+                "Pipeline SQL-nya sama persis dengan skill screening akumulasi, cuma arah beda",
+            ],
+            "output_callouts": [
+                "List ticker skor rendah (mis. ARNA, BYAN, GOTO) + return 20 hari",
+                "Nunjukin sistemnya simetris: bukan cuma nyari peluang, tapi juga warning dini",
+            ],
+        },
+        "en": {
+            "name": "Distribution Warning Screening",
+            "narration": "Not just upside hunting — the same signal engine also gives an "
+                         "early warning for stocks currently being distributed.",
+            "input": "Which stocks are being distributed right now?",
+            "processing": [
+                "Query MART.VW_WATCHLIST WHERE SIGNAL_LABEL = 'DISTRIBUTION'",
+                "Sort ascending by BANDAR_SCORE -> the lowest score is the strongest distribution",
+                "Same SQL pipeline as the accumulation screen, just the opposite direction",
+            ],
+            "output_callouts": [
+                "List of low-score tickers (e.g. ARNA, BYAN, GOTO) + their 20-day return",
+                "Shows the system is symmetric: it flags downside risk, not just upside",
             ],
         },
     },
@@ -395,9 +435,9 @@ def summary(skills_done, include_bonus):
     n = len(skills_done)
     status = C.GREEN if n >= 2 else C.RED
     label = t("Skill terdemokan", "Skills demoed")
-    ok_text = t("(memenuhi syarat 2-3 skill)", "(meets the 2-3 skill requirement)")
+    ok_text = t("(memenuhi syarat min. 2-3 skill)", "(meets the min. 2-3 skill requirement)")
     low_text = t("(KURANG — minimal 2 dibutuhkan)", "(SHORT — at least 2 required)")
-    print(f"  {label} : {status}{n}/3{C.RESET} {ok_text if n >= 2 else low_text}")
+    print(f"  {label} : {status}{n}{C.RESET} {ok_text if n >= 2 else low_text}")
     for s in skills_done:
         print(f"    {C.GREEN}✓{C.RESET} {s[LANG]['name']}")
     if include_bonus:
@@ -458,16 +498,24 @@ def main_menu():
     while True:
         banner()
         print(f"{C.BOLD}{t('Pilih mode:', 'Choose a mode:')}{C.RESET}\n")
+        core_skills = [s for s in SKILLS if s["core"]]
+        optional_skills = [s for s in SKILLS if not s["core"]]
+        pick_range = f"1-{len(SKILLS)}"
+
         print(f"  {C.SKY}[1]{C.RESET} " + t(
-            "Full demo sequence (3 skill + bonus honesty beat) — direkomendasikan",
-            "Full demo sequence (3 skills + bonus honesty beat) — recommended",
+            f"Sequence inti ({len(core_skills)} skill + bonus honesty beat) — direkomendasikan, muat 3-5 menit",
+            f"Core sequence ({len(core_skills)} skills + bonus honesty beat) — recommended, fits 3-5 min",
         ))
         print(f"  {C.SKY}[2]{C.RESET} " + t("Latihan satu skill saja", "Practice a single skill"))
         print(f"  {C.SKY}[3]{C.RESET} " + t(
             "Lihat semua prompt (tanpa timer, buat nyontek cepat)",
             "View all prompts (no timer, quick cheat sheet)",
         ))
-        print(f"  {C.SKY}[4]{C.RESET} " + t("Ganti bahasa", "Switch language"))
+        print(f"  {C.SKY}[5]{C.RESET} " + t(
+            f"Sequence extended (semua {len(SKILLS)} skill + bonus) — lebih panjang, cek durasi",
+            f"Extended sequence (all {len(SKILLS)} skills + bonus) — longer, watch the duration",
+        ))
+        print(f"  {C.SKY}[6]{C.RESET} " + t("Ganti bahasa", "Switch language"))
         print(f"  {C.SKY}[0]{C.RESET} " + t("Keluar", "Quit") + "\n")
         try:
             choice = input(f"{C.BOLD}> {C.RESET}").strip()
@@ -477,8 +525,8 @@ def main_menu():
 
         if choice == "1":
             done = []
-            for i, skill in enumerate(SKILLS):
-                show_skill(skill, i, len(SKILLS))
+            for i, skill in enumerate(core_skills):
+                show_skill(skill, i, len(core_skills))
                 done.append(skill)
             show_bonus()
             summary(done, include_bonus=True)
@@ -487,9 +535,10 @@ def main_menu():
         elif choice == "2":
             banner()
             for s in SKILLS:
-                print(f"  {C.SKY}[{s['num']}]{C.RESET} {s[LANG]['name']}")
+                tag = "" if s["core"] else t(" (opsional)", " (optional)")
+                print(f"  {C.SKY}[{s['num']}]{C.RESET} {s[LANG]['name']}{C.MUTED}{tag}{C.RESET}")
             try:
-                pick = input(f"\n{C.BOLD}{t('Pilih skill (1-3): ', 'Pick a skill (1-3): ')}{C.RESET}").strip()
+                pick = input(f"\n{C.BOLD}{t(f'Pilih skill ({pick_range}): ', f'Pick a skill ({pick_range}): ')}{C.RESET}").strip()
             except (EOFError, KeyboardInterrupt):
                 print()
                 return
@@ -498,6 +547,15 @@ def main_menu():
                 show_skill(matches[0], 0, 1)
                 summary(matches, include_bonus=False)
                 wait_enter(t("ENTER untuk kembali ke menu", "ENTER to go back to the menu"))
+
+        elif choice == "5":
+            done = []
+            for i, skill in enumerate(SKILLS):
+                show_skill(skill, i, len(SKILLS))
+                done.append(skill)
+            show_bonus()
+            summary(done, include_bonus=True)
+            wait_enter(t("ENTER untuk kembali ke menu", "ENTER to go back to the menu"))
 
         elif choice == "3":
             banner()
@@ -510,7 +568,7 @@ def main_menu():
             print(f'  {C.WHITE}"{LB["input"]}"{C.RESET}')
             wait_enter(t("ENTER untuk kembali ke menu", "ENTER to go back to the menu"))
 
-        elif choice == "4":
+        elif choice == "6":
             pick_language()
 
         elif choice == "0":
