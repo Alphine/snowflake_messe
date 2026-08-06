@@ -12,6 +12,7 @@ Usage:
     python demo_director.py
 """
 
+import os
 import sys
 import time
 import shutil
@@ -24,6 +25,32 @@ for _stream in (sys.stdout, sys.stderr):
         _stream.reconfigure(encoding="utf-8", errors="replace")
     except (AttributeError, ValueError):
         pass
+
+
+def _enable_windows_ansi():
+    """Windows PowerShell / cmd.exe don't interpret ANSI escapes unless the
+    console's virtual-terminal-processing flag is turned on first (Windows
+    Terminal and PowerShell 7 already default it on, but legacy
+    'Windows PowerShell' and cmd.exe do not). Returns True on success."""
+    if os.name != "nt":
+        return True
+    try:
+        import ctypes
+        kernel32 = ctypes.windll.kernel32
+        STD_OUTPUT_HANDLE = -11
+        ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004
+        handle = kernel32.GetStdHandle(STD_OUTPUT_HANDLE)
+        mode = ctypes.c_uint32()
+        if not kernel32.GetConsoleMode(handle, ctypes.byref(mode)):
+            return False
+        if not kernel32.SetConsoleMode(handle, mode.value | ENABLE_VIRTUAL_TERMINAL_PROCESSING):
+            return False
+        return True
+    except Exception:
+        return False
+
+
+_ANSI_OK = sys.stdout.isatty() and _enable_windows_ansi()
 
 # ---------------------------------------------------------------- colors --
 class C:
@@ -42,7 +69,7 @@ class C:
 
 
 def supports_color():
-    return sys.stdout.isatty()
+    return _ANSI_OK
 
 
 if not supports_color():
@@ -68,7 +95,10 @@ def strip_len(text):
 
 
 def clear():
-    print("\033[2J\033[H", end="")
+    if _ANSI_OK:
+        print("\033[2J\033[H", end="")
+    else:
+        print("\n" * 3)
 
 
 def wait_enter(prompt="Tekan ENTER untuk lanjut..."):
@@ -192,7 +222,6 @@ BONUS_HONESTY = {
 
 
 def show_skill(skill, idx, total):
-    clear()
     banner()
     color = [C.SKY, C.GREEN, C.YELLOW][idx % 3]
     print(f"{color}{C.BOLD}SKILL {skill['id']}/{total} — {skill['name']}{C.RESET}")
@@ -200,7 +229,6 @@ def show_skill(skill, idx, total):
     wait_enter("Siap mulai skill ini? ENTER untuk masuk STEP 1 (Input)")
 
     # STEP 1 — INPUT
-    clear()
     banner()
     step_box(1, 3, "INPUT", C.SKY)
     print(f"\n{C.DIM}Ketik ini persis di terminal `cortex`:{C.RESET}\n")
@@ -210,7 +238,6 @@ def show_skill(skill, idx, total):
     wait_enter("Sudah ketik & Enter di cortex? Lanjut ke STEP 2 (Processing)")
 
     # STEP 2 — PROCESSING
-    clear()
     banner()
     step_box(2, 3, "PROCESSING", C.YELLOW)
     print(f"\n{C.DIM}Yang lagi kejadian di balik layar (narasikan ini):{C.RESET}\n")
@@ -221,7 +248,6 @@ def show_skill(skill, idx, total):
     wait_enter("Query sudah selesai jalan? Lanjut ke STEP 3 (Output)")
 
     # STEP 3 — OUTPUT
-    clear()
     banner()
     step_box(3, 3, "OUTPUT", C.GREEN)
     print(f"\n{C.DIM}Highlight / sebutkan poin ini dari jawaban agent:{C.RESET}\n")
@@ -233,7 +259,6 @@ def show_skill(skill, idx, total):
 
 
 def show_bonus():
-    clear()
     banner()
     print(f"{C.PURPLE}{C.BOLD}{BONUS_HONESTY['name']}{C.RESET}\n")
     print(f"{C.DIM}Ketik ini sebagai penutup:{C.RESET}\n")
@@ -251,7 +276,6 @@ def total_budget(skills, include_bonus):
 
 
 def summary(skills_done, include_bonus):
-    clear()
     banner()
     rule("─", C.GREEN)
     center("RINGKASAN REKAMAN", C.GREEN, bold=True)
@@ -307,7 +331,6 @@ def main_menu():
             wait_enter("ENTER untuk kembali ke menu")
 
         elif choice == "2":
-            clear()
             banner()
             for s in SKILLS:
                 print(f"  {C.SKY}[{s['id']}]{C.RESET} {s['name']}")
@@ -323,7 +346,6 @@ def main_menu():
                 wait_enter("ENTER untuk kembali ke menu")
 
         elif choice == "3":
-            clear()
             banner()
             for s in SKILLS:
                 print(f"{C.BOLD}{s['name']}{C.RESET}")
